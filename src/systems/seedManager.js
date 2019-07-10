@@ -1,6 +1,5 @@
 /* global AFRAME RAMSHORN */
 var PoolHelper = require('../lib/poolHelper.js');
-
 RAMSHORN.SEEDPODS = {};
 
 RAMSHORN.registerSeedPod = function(name, data, definition) {
@@ -16,8 +15,9 @@ RAMSHORN.registerSeedPod = function(name, data, definition) {
 
   console.info('Seed pod registered ', name);
 };
-
 AFRAME.registerSystem('seedPod', {
+
+  schema: {}
   init: function () {
     var self = this;
     this.poolHelper = new Poolhelper('seedPod', RAMSHORN.SEEDPODS, this.sceneEl);
@@ -44,4 +44,4 @@ AFRAME.registerSystem('seedPod', {
     this.activeSeedPods.push(seedPod);
     return seedPod;
   }
-})
+});
