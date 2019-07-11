@@ -26,7 +26,7 @@
              renderer="colorManagement: true;
                        highRefreshRate: true;"
              shadow="autoUpdate: false; type: pcfsoft"
-             pool__ramsHorn="mixin: ramsClone; size: 10; dynamic: true">
+             pool__ramsClone="mixin: ramsClone; size: 10; dynamic: true">
       <a-assets>
 
         <!-- Sky Stuff & NCSU logo -->
@@ -335,6 +335,9 @@
                      look-controls=""
                      data-aframe-inspector-original-camera=""
                      position = "0 1.6 0">
+
+             <a-entity id="spawner" position="0 0 -1" rotation="0 0 0" spawner="mixin: ramsClone; spawnMagnitude: 5.0" collision-filter="collisionForces: false">
+             </a-entity>
            </a-entity>
            <!-- <a-entity id="leftHand" static-body="shape: sphere; sphereRadius: 0.02" hand-controls="left" sphere-collider="objects: .grabbable; radius: 0.04" shader grab></a-entity>
            <a-entity id="rightHand" static-body="shape: sphere; sphereRadius: 0.02" hand-controls="right" sphere-collider="objects: .grabbable; radius: 0.04" shader grab></a-entity> -->
