@@ -63,6 +63,14 @@ AFRAME.registerComponent('sticky', {
   onHit: function(evt) {
     var hitEl = evt.detail.body.el;
     //Check list of els if objects is defined
+
+    function checkStickable (el, hitEl) {
+      if(el === hitEl && !hitEl.is(this.STUCK_STATE)) {
+        hitEl.addState(this.STUCK_STATE);
+        this.el.emit('stick', {el: hitEl});
+      }
+    }
+
     if(this.data.objects) {
       this.els.forEach(checkStickable(hitEl));
     } else {
@@ -73,13 +81,7 @@ AFRAME.registerComponent('sticky', {
         this.el.emit('stick', {el: hitEl});
       }
     }
-    //check if one of the
-    function checkStickable (el, hitEl) {
-      if(el === hitEl && !hitEl.is(this.STUCK_STATE)) {
-        hitEl.addState(this.STUCK_STATE);
-        this.el.emit('stick', {el: hitEl});
-      }
-    }
+  },
 
   //  if(hitEl.getAttribute('class') ==
     //}
@@ -104,7 +106,6 @@ AFRAME.registerComponent('sticky', {
     //  this.spawn();
     //}
     //console.log(evt.detail.body.el.id); */
-  },
 
   onStick: function(evt) {
     const hitEl = evt.detail.el;
@@ -124,7 +125,7 @@ AFRAME.registerComponent('sticky', {
       this.system.removeConstraint(constraints[stuckEl]);
       delete constraints[stuckEl];
     }
-  }
+  },
 
   makeSound: function() {
     // TODO
