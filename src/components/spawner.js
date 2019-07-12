@@ -29,7 +29,9 @@ AFRAME.registerComponent('spawner', {
     //el.addEventListener('collide', this.onHit);
     el.addEventListener('spawn', this.spawn);
     document.addEventListener('mousedown', this.onMouseDown);
+    document.addEventListener('touchstart', this.onMouseDown);
     document.addEventListener('mouseup', this.onMouseUp);
+    document.addEventListener('touchend', this.onMouseDown);
   },
 
   pause: function() {
