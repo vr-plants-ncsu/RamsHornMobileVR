@@ -30,8 +30,8 @@ AFRAME.registerComponent('spawner', {
     el.addEventListener('spawn', this.spawn);
     document.addEventListener('mousedown', this.onMouseDown);
     document.addEventListener('mouseup', this.onMouseUp);
-    //document.addEventListener('touchstart', this.onMouseDown);
-    //document.addEventListener('touchend', this.onMouseUp);
+    document.addEventListener('touchstart', this.onMouseDown);
+    document.addEventListener('touchend', this.onMouseUp);
   },
 
   pause: function() {
@@ -40,8 +40,8 @@ AFRAME.registerComponent('spawner', {
     el.removeEventListener('spawn', this.spawn);
     document.removeEventListener('mousedown', this.onMouseDown);
     document.removeEventListener('mouseup', this.onMouseUp);
-    //document.removeEventListener('touchstart', this.onMouseDown);
-    //document.removeEventListener('touchend', this.onMouseUp);
+    document.removeEventListener('touchstart', this.onMouseDown);
+    document.removeEventListener('touchend', this.onMouseUp);
   },
 
 
@@ -134,13 +134,13 @@ AFRAME.registerComponent('spawner', {
 
       var dir = new THREE.Vector3();
       el.object3D.getWorldDirection(dir);
-      console.log("Direction: " + dir.x + " " + dir.y + " " + dir.z)
+      //console.log("Direction: " + dir.x + " " + dir.y + " " + dir.z)
       entity.body.applyLocalForce(
   /* impulse */        new CANNON.Vec3(dir.x*(-1*this.power), dir.y*(-1*this.power) + this.power/2.5, dir.z*(-1*this.power)),
   /* world position */ new CANNON.Vec3(0, 0.2, 0)
-);
-      console.log(v);
-      console.log("Shot pod at " + this.power + "!");
+      );
+      //console.log(v);
+      //console.log("Shot pod at " + this.power + "!");
     }
 
   },
@@ -151,7 +151,7 @@ AFRAME.registerComponent('spawner', {
       this.mouseTimeStamp = el.sceneEl.time;
     }
     this.mouseDown = true;
-    console.log("Mouse Down!");
+    //console.log("Mouse Down!");
   },
 
   onMouseUp: function() {
