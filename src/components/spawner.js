@@ -134,8 +134,8 @@ AFRAME.registerComponent('spawner', {
       el.object3D.getWorldDirection(dir);
       console.log("Direction: " + dir.x + " " + dir.y + " " + dir.z)
       entity.body.applyLocalForce(
-  /* impulse */        new CANNON.Vec3(dir.x*(-1*this.power), dir.y*(-1*this.power), dir.z*(-1*this.power)),
-  /* world position */ new CANNON.Vec3(0, 0, 0)
+  /* impulse */        new CANNON.Vec3(dir.x*(-1*this.power), dir.y*(-1*this.power) + this.power/2.5, dir.z*(-1*this.power)),
+  /* world position */ new CANNON.Vec3(0, 0.2, 0)
 );
       console.log(v);
       console.log("Shot pod at " + this.power + "!");
