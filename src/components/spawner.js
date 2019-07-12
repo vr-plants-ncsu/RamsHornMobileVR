@@ -30,8 +30,8 @@ AFRAME.registerComponent('spawner', {
     el.addEventListener('spawn', this.spawn);
     document.addEventListener('mousedown', this.onMouseDown);
     document.addEventListener('mouseup', this.onMouseUp);
-    document.addEventListener('touchstart', this.onMouseDown);
-    document.addEventListener('touchend', this.onMouseUp);
+    //document.addEventListener('touchstart', this.onMouseDown);
+    //document.addEventListener('touchend', this.onMouseUp);
   },
 
   pause: function() {
@@ -40,8 +40,8 @@ AFRAME.registerComponent('spawner', {
     el.removeEventListener('spawn', this.spawn);
     document.removeEventListener('mousedown', this.onMouseDown);
     document.removeEventListener('mouseup', this.onMouseUp);
-    document.removeEventListener('touchstart', this.onMouseDown);
-    document.removeEventListener('touchend', this.onMouseUp);
+    //document.removeEventListener('touchstart', this.onMouseDown);
+    //document.removeEventListener('touchend', this.onMouseUp);
   },
 
 
