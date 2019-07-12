@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	   <meta charset="utf-8" name="description" content="Plant Education in VR"/>
+     <title>Plant Education in VR: Ram's Horn Spawner Test</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
+     <meta name="mobile-web-app-capable" content="yes">
+     <meta name="apple-mobile-web-app-capable" content="yes">
+     <meta name="msapplication-TileColor" content="#da532c">
+     <meta name="theme-color" content="#ffffff">
+
+     <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@ada1ed5f1e2736d70ba887cee6cfa9dbd655cc50/dist/aframe-master.min.js"></script>
+    <!-- <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.1.0/dist/aframe-extras.min.js"></script> -->
+     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.1.0/dist/aframe-extras.js"></script>
+     <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
+     <script src="https://unpkg.com/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script>
+     <script src="./src/components/sphere-collider-mod.js"></script>
+     <script src="./src/components/spawner.js"></script>
+     <script src="./src/components/sticky.js"></script>
+
+  </head>
+  <body>
+    <a-scene physics="debug: false"
+             background="color: #ECECEC"
+             fog="type: exponential; color: #b096fe; density: 0.002"
+             renderer="colorManagement: true;
+                       highRefreshRate: true;"
+             shadow="autoUpdate: false; type: pcfsoft"
+             pool__ramsclone="mixin: ramsClone; size: 10; dynamic: true">
+      <a-assets>
+
+        <!-- Sky Stuff & NCSU logo -->
+        <img id="sky" src="./assets/arizona_sky.jpg" crossorigin="anonymous">
+        <img id="pipe" src="./assets/bottomless_pit.jpg" crossorigin="anonymous">
+        <img id="cliffs" src="./assets/Rocks and sand.png" crossorigin="anonymous">
+        <img id="NCSULogo" src="./assets/brick4x1.jpg" crossorigin="anonymous">
+        <img id="basin" src="./assets/basin.jpg" crossorigin="anonymous">
+
+        <!-- Sand Textures -->
+        <img id="sand" src="./assets/sand/sgfodj1a/sgfodj1a_4K_Albedo.jpg" crossorigin="anonymous">
+        <img id="sand_ao" src="./assets/sand/sgfodj1a/sgfodj1a_4K_AO.jpg" crossorigin="anonymous">
+        <img id="sand_norm" src="./assets/sand/sgfodj1a/sgfodj1a_4K_Normal.jpg" crossorigin="anonymous">
+        <img id="sand_rough" src="./assets/sand/sgfodj1a/sgfodj1a_4K_Roughness.jpg" crossorigin="anonymous">
+
+
+        <!-- Rams Horn -->
+        <a-asset-item id="rams-horn" src="./assets/ramsHorn/Ram's Horn 2.gltf" crossorigin="anonymous"></a-asset-item>
+
+        <!-- Mushroom -->
+        <a-asset-item id="chanterelle" src="./assets/chanterelle/LightShroomZ.gltf" crossorigin="anonymous"></a-asset-item>
+
+        <!-- Buffalo (American Bison)-->
+        <!--<a-asset-item id="bison-glb" src="./assets/bison.glb" crossorigin="anonymous"></a-asset-item>-->
+        <a-asset-item id="bison2-glb" src="./assets/bison/bison2.glb" crossorigin="anonymous"></a-asset-item>
+
+        <!-- Rocks -->
+        <a-asset-item id="rocks-glb" src="./assets/rocks/rocks.glb" crossorigin="anonymous"></a-asset-item>
+
+        <!-- Log -->
+        <a-asset-item id="log-gltf" src="./assets/Poly Models/log/PUSHILIN_log.gltf" crossorigin="anonymous"></a-asset-item>
+
+        <!-- Sunnies -->
+        <a-asset-item id="sunnies-gltf" src="./assets/Poly Models/sunnies/Sunglasses_01.gltf" crossorigin="anonymous"></a-asset-item>
+
+        <!-- Fence -->
+        <a-asset-item id="fence-gltf" src="./assets/Poly Models/fence/SM_PicketFence_02.gltf" crossorigin="anonymous"></a-asset-item>
+
+        <!-- Boombox -->
+        <a-asset-item id="boombox-gltf" src="./assets/boombox/Boombox.gltf" crossorigin="anonymous"></a-asset-item>
+
+        <!-- Grass -->
+        <a-asset-item id="grass-glb" src="./assets/Poly Models/grass.glb" crossorigin="anonymous"></a-asset-item>
+
+        <!-- Wind -->
+        <audio id="wind" src="./assets/RamsWind.mp3" preload="auto" autoplay="true" loop="true" positional="true" refDistance="1" crossorigin="anonymous"></audio>
+
+        <!-- Music -->
+        <!--<audio id="music" src="./assets/RamsRodeo_1.4.mp3" preload="auto" autoplay="true" loop="true"></audio>
+        -->
+        <a-mixin id="colliderShapesRam" body="type: dynamic; shape: none; mass: 0.1; linearDamping: 0.1; angularDamping: 0.1"
+
+        shape__main="shape: sphere;
+                     radius: 0.17;
+                     offset: -0.145 0.136 0.165;"
+        shape__body1="shape: sphere;
+                      radius: 0.12;
+                      offset: -0.083 0.243 0.198;"
+        shape__body2="shape: sphere;
+                      radius: 0.12;
+                      offset: -0.173 0.029 0.118;"
+
+        shape__bodyTop="shape: box;
+                        halfExtents: 0.084 0.103 0.105;
+                        offset: -0.157 -0.098 0.038;
+                        orientation: 0.8400684, 0.2886184, 0.0301367, 0.4583408 ;"
+        shape__leftArm="shape: box;
+                        halfExtents: 0.137 0.0445 0.0325;
+                        offset: 0.005 -0.244 0.06;
+                        orientation: 0.1290826 0.0039395 -0.1003681 0.9865335;"
+        shape__leftArm1="shape: box;
+                         halfExtents: 0.13 0.041 0.0305;
+                         offset: 0.249 -0.271 0.017;
+                         orientation: 0.0501092 0.1840173 0.0409406 0.9807908;"
+        shape__leftArm2="shape: box;
+                         halfExtents: 0.09 0.0365 0.02;
+                         offset: 0.417 -0.197 -0.078w;
+                         orientation: 0.0707054 0.3141996 0.3492167 0.8799586;"
+        shape__leftArm3="shape: box;
+                         halfExtents: 0.0485 0.0305 0.02;
+                         offset: 0.482 -0.107 -0.142;
+                         orientation: 0.09046 0.3303264 0.4447484 0.8275871;"
+        shape__leftArm4="shape: box;
+                         halfExtents: 0.091 0.0285 0.013;
+                         offset: 0.487 0.007 -0.18;
+                         orientation: 0.0135517 0.1734546 0.8368887 0.5189867;"
+        shape__rightArm="shape: box;
+                         halfExtents: 0.026 0.044 0.1045;
+                         offset: -0.171 -0.098 -0.15;
+                         orientation: 0.123475, -0.1116069, -0.3571837, 0.9190852;"
+        shape__rightArm1="shape: box;
+                          halfExtents: 0.12 0.0245 0.0355;
+                          offset: -0.073 -0.048 -0.325;
+                          orientation: -0.0936292 0.333684 0.2393541 0.906972;"
+        shape__rightArm2="shape: box;
+                          halfExtents: 0.1065 0.032 0.0205;
+                          offset: 0.092 0.02 -0.43;
+                          orientation: 0.7413147 0.192885, 0.002603 0.6428382;"
+        shape__rightArm3="shape: box;
+                          halfExtents: 0.0865 0.025 0.0145;
+                          offset: 0.263 0.07 -0.436;
+                          orientation: 0.7100493 -0.0113422 0.1822565 0.6800617;"
+        shape__rightArm4="shape: box;
+                          halfExtents: 0.0455 0.0165 0.0145;
+                          offset: 0.371 0.101 -0.386;
+                          orientation: 0.7033997 -0.186609 0.3871981 0.5661126;"
+        shape__rightArm5="shape: box;
+                          halfExtents: 0.0515 0.022 0.01;
+                          offset: 0.407 0.11 -0.31;
+                          orientation: -0.6250864 0.3855834 -0.5259696 -0.4288922;"></a-mixin>
+
+        <a-mixin id="ramsClone" gltf-model="#rams-horn" body="type: dynamic; shape: none; mass: 0.1; linearDamping: 0.1; angularDamping: 0.1"
+        shape__main="shape: sphere;
+                     radius: 0.17;
+                     offset: -0.145 0.136 0.165;"
+        shape__body1="shape: sphere;
+                      radius: 0.12;
+                      offset: -0.083 0.243 0.198;"
+        shape__body2="shape: sphere;
+                      radius: 0.12;
+                      offset: -0.173 0.029 0.118;"
+
+        shape__bodyTop="shape: box;
+                        halfExtents: 0.084 0.103 0.105;
+                        offset: -0.157 -0.098 0.038;
+                        orientation: 0.8400684, 0.2886184, 0.0301367, 0.4583408 ;"
+        shape__leftArm="shape: box;
+                        halfExtents: 0.137 0.0445 0.0325;
+                        offset: 0.005 -0.244 0.06;
+                        orientation: 0.1290826 0.0039395 -0.1003681 0.9865335;"
+        shape__leftArm1="shape: box;
+                         halfExtents: 0.13 0.041 0.0305;
+                         offset: 0.249 -0.271 0.017;
+                         orientation: 0.0501092 0.1840173 0.0409406 0.9807908;"
+        shape__leftArm2="shape: box;
+                         halfExtents: 0.09 0.0365 0.02;
+                         offset: 0.417 -0.197 -0.078w;
+                         orientation: 0.0707054 0.3141996 0.3492167 0.8799586;"
+        shape__leftArm3="shape: box;
+                         halfExtents: 0.0485 0.0305 0.02;
+                         offset: 0.482 -0.107 -0.142;
+                         orientation: 0.09046 0.3303264 0.4447484 0.8275871;"
+        shape__leftArm4="shape: box;
+                         halfExtents: 0.091 0.0285 0.013;
+                         offset: 0.487 0.007 -0.18;
+                         orientation: 0.0135517 0.1734546 0.8368887 0.5189867;"
+        shape__rightArm="shape: box;
+                         halfExtents: 0.026 0.044 0.1045;
+                         offset: -0.171 -0.098 -0.15;
+                         orientation: 0.123475, -0.1116069, -0.3571837, 0.9190852;"
+        shape__rightArm1="shape: box;
+                          halfExtents: 0.12 0.0245 0.0355;
+                          offset: -0.073 -0.048 -0.325;
+                          orientation: -0.0936292 0.333684 0.2393541 0.906972;"
+        shape__rightArm2="shape: box;
+                          halfExtents: 0.1065 0.032 0.0205;
+                          offset: 0.092 0.02 -0.43;
+                          orientation: 0.7413147 0.192885, 0.002603 0.6428382;"
+        shape__rightArm3="shape: box;
+                          halfExtents: 0.0865 0.025 0.0145;
+                          offset: 0.263 0.07 -0.436;
+                          orientation: 0.7100493 -0.0113422 0.1822565 0.6800617;"
+        shape__rightArm4="shape: box;
+                          halfExtents: 0.0455 0.0165 0.0145;
+                          offset: 0.371 0.101 -0.386;
+                          orientation: 0.7033997 -0.186609 0.3871981 0.5661126;"
+        shape__rightArm5="shape: box;
+                          halfExtents: 0.0515 0.022 0.01;
+                          offset: 0.407 0.11 -0.31;
+                          orientation: -0.6250864 0.3855834 -0.5259696 -0.4288922;" class="grabbable" shadow></a-mixin>
+
+        <a-mixin id="spawnerShapesRam" body="type: dynamic; shape: none; mass: 0;" collision-filter="collisionForces: false"
+        shape__main="shape: sphere;
+                     radius: 0.17;
+                     offset: -0.145 0.136 0.165;"
+        shape__body1="shape: sphere;
+                      radius: 0.12;
+                      offset: -0.083 0.243 0.198;"
+        shape__body2="shape: sphere;
+                      radius: 0.12;
+                      offset: -0.173 0.029 0.118;"
+
+        shape__bodyTop="shape: box;
+                        halfExtents: 0.084 0.103 0.105;
+                        offset: -0.157 -0.098 0.038;
+                        orientation: 0.8400684, 0.2886184, 0.0301367, 0.4583408 ;"
+        shape__leftArm="shape: box;
+                        halfExtents: 0.137 0.0445 0.0325;
+                        offset: 0.005 -0.244 0.06;
+                        orientation: 0.1290826 0.0039395 -0.1003681 0.9865335;"
+        shape__leftArm1="shape: box;
+                         halfExtents: 0.13 0.041 0.0305;
+                         offset: 0.249 -0.271 0.017;
+                         orientation: 0.0501092 0.1840173 0.0409406 0.9807908;"
+        shape__leftArm2="shape: box;
+                         halfExtents: 0.09 0.0365 0.02;
+                         offset: 0.417 -0.197 -0.078w;
+                         orientation: 0.0707054 0.3141996 0.3492167 0.8799586;"
+        shape__leftArm3="shape: box;
+                         halfExtents: 0.0485 0.0305 0.02;
+                         offset: 0.482 -0.107 -0.142;
+                         orientation: 0.09046 0.3303264 0.4447484 0.8275871;"
+        shape__leftArm4="shape: box;
+                         halfExtents: 0.091 0.0285 0.013;
+                         offset: 0.487 0.007 -0.18;
+                         orientation: 0.0135517 0.1734546 0.8368887 0.5189867;"
+        shape__rightArm="shape: box;
+                         halfExtents: 0.026 0.044 0.1045;
+                         offset: -0.171 -0.098 -0.15;
+                         orientation: 0.123475, -0.1116069, -0.3571837, 0.9190852;"
+        shape__rightArm1="shape: box;
+                          halfExtents: 0.12 0.0245 0.0355;
+                          offset: -0.073 -0.048 -0.325;
+                          orientation: -0.0936292 0.333684 0.2393541 0.906972;"
+        shape__rightArm2="shape: box;
+                          halfExtents: 0.1065 0.032 0.0205;
+                          offset: 0.092 0.02 -0.43;
+                          orientation: 0.7413147 0.192885, 0.002603 0.6428382;"
+        shape__rightArm3="shape: box;
+                          halfExtents: 0.0865 0.025 0.0145;
+                          offset: 0.263 0.07 -0.436;
+                          orientation: 0.7100493 -0.0113422 0.1822565 0.6800617;"
+        shape__rightArm4="shape: box;
+                          halfExtents: 0.0455 0.0165 0.0145;
+                          offset: 0.371 0.101 -0.386;
+                          orientation: 0.7033997 -0.186609 0.3871981 0.5661126;"
+        shape__rightArm5="shape: box;
+                          halfExtents: 0.0515 0.022 0.01;
+                          offset: 0.407 0.11 -0.31;
+                          orientation: -0.6250864 0.3855834 -0.5259696 -0.4288922;"></a-mixin>
+
+        <!-- Bison Sticky Collider -->
+        <a-mixin id="colliderShapesBison" body="type: static; shape: none;"
+        shape__main="shape: sphere;
+                     radius: 0.65;
+                     offset: -0.988 1.835 0.0;"
+        shape__torso1="shape: cylinder;
+                       radiusTop: 0.51;
+                       radiusBottom: 0.51;
+                       height: 2.0;
+                       offset: -0.968 1.931 0.0;
+                       orientation: 0.0 0.0 0.7071068 0.7071068;"
+        shape__torso2="shape: cylinder;
+                       radiusTop: 0.6;
+                       radiusBottom: 0.6;
+                       height: 0.5;
+                       offset: -1.105 1.993 0.0;
+                       orientation: 0.5 0.5 0.5 0.5;"
+        shape__torso3="shape: box;
+                       halfExtents: 1.0 0.247 0.2955;
+                       offset: -0.903 1.335 0.0;"
+
+        shape__leftFrontLeg="shape: box;
+                             halfExtents: 0.0895 0.5 0.095;
+                             offset: -1.047 0.502 -0.236;
+                             orientation: 0 0 -0.150424 0.9886216;"
+        shape__rightFrontLeg="shape: box;
+                             halfExtents: 0.0895 0.5 0.095;
+                             offset: -1.047 0.502 0.236;
+                             orientation: 0 0 -0.150424 0.9886216;"
+
+        shape__haunches1="shape: box;
+                          halfExtents: 0.4575 0.5 0.2955;
+                          offset: 0.478 1.823 0;"
+        shape__haunches2="shape: cylinder;
+                          radiusTop: 0.5;
+                          radiusBottom: 0.5;
+                          height: 0.5;
+                          offset: 0.783 1.754 0.0;
+                          orientation: 0.5 0.5 0.5 0.5;"
+        shape__leftThigh="shape: box;
+                          halfExtents: 0.1835 0.5 0.095;
+                          offset: 0.889 1.407 0.271;
+                          orientation: 0 0 0.1700289 0.9854391;"
+        shape__rightThigh="shape: box;
+                           halfExtents: 0.1835 0.5 0.095;
+                           offset: 0.889 1.407 -0.271;
+                           orientation: 0 0 0.1700289 0.9854391;"
+
+        shape__leftHindLeg="shape: box;
+                            halfExtents: 0.0895 0.5 0.095;
+                            offset: 1.069 0.501 0.236;
+                            orientation: 0 0 -0.0550896 0.9984814;"
+        shape__rightHindLeg="shape: box;
+                             halfExtents: 0.0895 0.5 0.095;
+                             offset: 1.069 0.501 -0.236;
+                             orientation: 0 0 -0.0550896 0.9984814;"></a-mixin>
+
+      </a-assets>
+
+      <!-- Ground -->
+      <!-- <a-plane id="ground_ugh" segmentsWidth="128" segmentsHeight="128" position="0 2 0" rotation="-90 0 0" width="1024" height="1024" material="shader: standard; color: #d88436; roughness: 100.00; metalness: 0.00" ></a-plane> -->
+      <!--<a-box static-body visible="true" id="ground" segmentsWidth="128" segmentsHeight="128" position="0 -14.01 0" rotation="0 0 0" width="1024" height="32" depth="1024" material="shader: standard; color: #d88436; roughness: 100.00; metalness: 0.00;" ></a-box>-->
+      <a-box static-body id="ground" position="0 -14 0" rotation="0 0 0" width="1024" height="32" depth="1024" material="shader: standard; ambientOcclusionMap: #sand_ao; ambientOcclusionTextureRepeat: 64 64; normalMap: #sand_norm; normalTextureRepeat: 64 64; src: #sand; repeat: 64 64; roughnessMap: #sand_rough; roughnessTextureRepeat: 64 64; roughness: 1.0;"></a-box>
+
+      <!-- Sky -->
+      <a-sky src="#sky" radius="512" ></a-sky>
+      <!--<a-sky src="#cliffs" radius="512" transparent="true"></a-sky>-->
+
+      <!-- Mountains -->
+
+      <!-- Player Rig --> <!-- to enamble movement controls, add "trackpad" and "touch" to "controls: " parameter of "movement-controls" -->
+      <!--<a-entity id="rig" movement-controls=" speed: .30; controls: keyboard" position="-0.463 2 -5.464" rotation="0 -90 0"> -->
+      <a-entity id="rig" position="-0.463 2 -5.464" rotation="0 -90 0">
+           <a-entity camera="active: true"
+                     look-controls=""
+                     data-aframe-inspector-original-camera=""
+                     position = "0 1.6 0">
+                     <a-entity id="spawner" position="0 0 -1" rotation="0 0 0" spawner="mixin: ramsClone; spawnMagnitude: 75.0">
+                     </a-entity>
+           </a-entity>
+           <!-- <a-entity id="leftHand" static-body="shape: sphere; sphereRadius: 0.02" hand-controls="left" sphere-collider="objects: .grabbable; radius: 0.04" shader grab></a-entity>
+           <a-entity id="rightHand" static-body="shape: sphere; sphereRadius: 0.02" hand-controls="right" sphere-collider="objects: .grabbable; radius: 0.04" shader grab></a-entity> -->
+           <a-entity id="leftHand" hand-controls="left" static-body="shape: sphere; sphereRadius: 0.02" sphere-collider-mod="objects: .grabbable, .mush; radius: 0.04" grab shadow></a-entity>
+           <a-entity id="rightHand" hand-controls="right" static-body="shape: sphere; sphereRadius: 0.02" sphere-collider-mod="objects: .grabbable, .mush; radius: 0.04" grab shadow></a-entity>
+           <!-- <a-entity static-body="shape: sphere; sphereRadius: 0.02" oculus-touch-controls="hand: left" sphere-collider="objects: .grabbable; radius: 0.04" grab></a-entity>
+           <a-entity static-body="shape: sphere; sphereRadius: 0.02" oculus-touch-controls="hand: right" sphere-collider="objects: .grabbable; radius: 0.04" grab></a-entity> -->
+
+       </a-entity>
+
+       <!-- Spawners --> <!-- p: 0.162 -0.162 -0.243-->
+       <!--
+       <a-entity id="spawner" dynamic-body="mass: 0; shape: sphere; sphereRadius: 0.25" position="0.474 2.781 -5.758" rotation="180 45 45" spawner="mixin: ramsClone" collision-filter="collisionForces: false">
+         <a-gltf-model src="#rams-horn" position="0.170 -0.17 -0.232" ></a-gltf-model>
+         <a-sphere id="handle" position="0 0 0" color="tomato" opacity="0.5" radius="0.25"></a-sphere>
+       </a-entity>
+       <a-entity id="spawner2" dynamic-body="mass: 0; shape: sphere; sphereRadius: 0.25" position="0.327 2.612 -4.695" rotation="5.034 179.42 -135.69" spawner="mixin: ramsClone" collision-filter="collisionForces: false">
+         <a-gltf-model src="#rams-horn" position="0.170 -0.17 -0.232" ></a-gltf-model>
+         <a-sphere id="handle" position="0 0 0" color="tomato" opacity="0.5" radius="0.25"></a-sphere>
+       </a-entity>
+     -->
+
+       <!-- <a-entity id="bison" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="8 2 -8" rotation="0.0 60.849 0.0" scale="1 1 1" sticky=".grabbable" shadow>
+         <!--<a-entity id="bison-sunnies" gltf-model="#sunnies-gltf" position="-2.966 1.626 0.021" rotation="180 90 180" scale="0.032 0.032 0.032" ></a-entity> -->
+       <!--</a-entity>  -->
+
+       <!--<a-entity id="bison1" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="21 8.086 -27.146" rotation="0.0 -45 0.0" scale=".75 .75 .75" sticky=".grabbable" shadow>
+         <!--<a-entity id="bison-sunnies" gltf-model="#sunnies-gltf" position="-2.966 1.626 0.021" rotation="180 90 180" scale="0.032 0.032 0.032" ></a-entity>
+       </a-entity>-->
+
+       <!--<a-entity id="bison2" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="12 2 -4" rotation="0.0 -15 0.0" scale=".75 .75 .75" sticky=".grabbable" shadow>
+         <!--<a-entity id="bison-sunnies" gltf-model="#sunnies-gltf" position="-2.966 1.626 0.021" rotation="180 90 180" scale="0.032 0.032 0.032" ></a-entity> -->
+       <!--</a-entity>
+
+       <a-entity id="bison3" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="10 2 -12" rotation="0.0 165 0.0" scale=".75 .75 .75" sticky=".grabbable" shadow>
+         <!--<a-entity id="bison-sunnies" gltf-model="#sunnies-gltf" position="-2.966 1.626 0.021" rotation="180 90 180" scale="0.032 0.032 0.032" ></a-entity> -->
+       <!--</a-entity>
+
+       <!-- Rocks -->
+       <a-entity id="rocks" position="0 0 0">
+         <a-entity id="rocks 1" gltf-model="#rocks-glb" position="12 0 34.06767" scale="1 1 1" rotation="2.790304462287109 -81.16405534264216 1.665588310445303" shadow>
+         </a-entity>
+         <a-entity id="rocks-2" gltf-model="#rocks-glb" position="12 0 -8" scale="1 1 1" shadow>
+         </a-entity>
+         <a-entity id="rocks-3" gltf-model="#rocks-glb" position="28.376 -1.206 -63.121" rotation="0.018 158.310 -3.249" scale="1 1 1" shadow>
+         </a-entity>
+         <!--<a-entity id="rocks-4" gltf-model="#rocks-glb" position="77.475 2.667 -2.568" rotation="-3.088 49.811 1.013"scale="1 1 1" >-->
+         </a-entity>
+       </a-entity>
+
+       <!-- More Rocks -->
+       <a-entity id="rocks_also" position="0 0 0" rotation="0 180 0">
+         <a-entity id="rocks 1" gltf-model="#rocks-glb" position="12 0 34.06767" scale="1 1 1" rotation="2.790304462287109 -81.16405534264216 1.665588310445303" shadow>
+         </a-entity>
+         <a-entity id="rocks-2" gltf-model="#rocks-glb" position="12 0 -8" scale="1 1 1" shadow>
+         </a-entity>
+         <a-entity id="rocks-3" gltf-model="#rocks-glb" position="28.376 -1.206 -63.121" rotation="0.018 158.310 -3.249" scale="1 1 1" shadow>
+         </a-entity>
+         <a-entity id="rocks-4" gltf-model="#rocks-glb" position="77.475 2.667 -2.568" rotation="-3.088 49.811 1.013"scale="1 1 1" shadow>
+         </a-entity>
+       </a-entity>
+
+       <!-- Fences -->
+       <a-entity id="fence" gltf-model="#fence-gltf" position="2.190 2.018 -4.264" rotation="0 -59.267 0.0"></a-entity shadow>
+       <a-entity id="fence1" gltf-model="#fence-gltf" position="1.311 2.018 -6.165" rotation="0 -73.128 0.0"></a-entity shadow>
+       <a-entity id="fence2" gltf-model="#fence-gltf" position="1.041 2.018 -8.231" rotation="180.0 -87.911 180.0"></a-entity shadow>
+
+       <!-- Grass
+       <a-entity id="grass" gltf-model="#grass-glb" position="-0.144 2.5 -9.649" scale="2 2 2" rotation="0 0 0" ></a-entity>
+       <a-entity id="grass1" gltf-model="#grass-glb" position="1.582 2.5 -9.513" scale="2 2 2" rotation="10.403 123.740 0.0" ></a-entity>
+       <a-entity id="grass2" gltf-model="#grass-glb" position="1.847 2.5 -4.206" scale="2 2 2" rotation="9.788 32 0" ></a-entity>
+       <a-entity id="grass3" gltf-model="#grass-glb" position="2.264 2.5 -2.666" scale="2 2 2" rotation="14.7 -153.69 0" ></a-entity>
+       <a-entity id="grass4" gltf-model="#grass-glb" position="2.508 2.5 -3.187" scale="2 2 2" rotation="13.443 0 0" ></a-entity>
+       <a-entity id="grass5" gltf-model="#grass-glb" position="2.368 2.727 -3.212" scale="2 2 2" rotation="25.887 80 0" ></a-entity>
+
+       <!-- More Grass --
+       <a-entity id="more_grass" position="6.033 2.5 -7.5">
+         <a-entity gltf-model="#grass-glb" scale="2 2 2" position="0 0 0.5" ></a-entity>
+         <a-entity gltf-model="#grass-glb" scale="2 2 2" position="0 0 1" ></a-entity>
+         <a-entity gltf-model="#grass-glb" scale="2 2 2" position="0 0 1.5" ></a-entity>
+         <a-entity gltf-model="#grass-glb" scale="2 2 2" position="0 0 2" ></a-entity>
+         <a-entity gltf-model="#grass-glb" scale="2 2 2" position="0 0 2.5" ></a-entity>
+         <a-entity gltf-model="#grass-glb"
+         scale="2 2 2" position="0 0 3" ></a-entity>
+         <a-entity gltf-model="#grass-glb" scale="2 2 2" position="0 0 3.5" ></a-entity>
+         <a-entity gltf-model="#grass-glb" scale="2 2 2" position="0 0 4" ></a-entity>
+         <a-entity gltf-model="#grass-glb" scale="2 2 2" position="0 0 4.5" ></a-entity>
+         <a-entity gltf-model="#grass-glb" scale="2 2 2" position="0 0 5" ></a-entity>
+       </a-entity>
+       <!-- Log -->
+       <a-entity id="log" gltf-model="#log-gltf" position="0.784 2.356 -5.967" rotation="0.0 100.397 0.0" scale="0.75 0.75 0.75" shadow></a-entity>
+       <a-entity id="log2" gltf-model="#log-gltf" position="0.706 1.542 -4.355" rotation="10.482 -70.113 -70.552" scale="0.75 0.75 0.75" shadow></a-entity>
+
+       <!-- Boombox -->
+       <a-entity id="boombox" gltf-model="#boombox-gltf" position="0.297 2.0 -8.246" scale="0.494 0.494 0.494" rotation="0 -35 0" shadow></a-entity>
+       <!-- Testing for player area (not moving) -->
+       <a-box id="player_area" color="tomato" scale="2 2 2" rotation="0 18.630 0" position="-0.463 3.0 -5.464" opacity="0.25" visible="false"></a-box>
+
+       <a-entity id="lights" position="-13 18 23">
+         <a-entity id="dirLight" light="color: #aa8dfe; intensity: 0.6; castShadow: true; shadowMapHeight: 4096; shadowMapWidth: 4096; shadowCameraTop: 50; shadowCameraRight: 50; shadowCameraBottom: -50; shadowCameraLeft: -50; shadowCameraFar: 120;" visible=""></a-entity>
+         <a-entity id="hemiLight" light="intensity: 0.4; type: hemisphere;  color: #d5c6ff; groundColor: #995f2b"></a-entity>
+         <a-entity id="ambLight" light="color: #ffe4ae; intensity: 0.3; type: ambient"></a-entity>
+       </a-entity>
+
+    </a-scene>
+  </body>
+</html>

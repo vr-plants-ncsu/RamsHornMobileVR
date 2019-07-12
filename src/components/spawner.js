@@ -29,9 +29,9 @@ AFRAME.registerComponent('spawner', {
     //el.addEventListener('collide', this.onHit);
     el.addEventListener('spawn', this.spawn);
     document.addEventListener('mousedown', this.onMouseDown);
-    document.addEventListener('touchstart', this.onMouseDown);
     document.addEventListener('mouseup', this.onMouseUp);
-    document.addEventListener('touchend', this.onMouseDown);
+    document.addEventListener('touchstart', this.onMouseDown);
+    document.addEventListener('touchend', this.onMouseUp);
   },
 
   pause: function() {
@@ -40,7 +40,8 @@ AFRAME.registerComponent('spawner', {
     el.removeEventListener('spawn', this.spawn);
     document.removeEventListener('mousedown', this.onMouseDown);
     document.removeEventListener('mouseup', this.onMouseUp);
-
+    document.removeEventListener('touchstart', this.onMouseDown);
+    document.removeEventListener('touchend', this.onMouseUp);
   },
 
 
@@ -101,6 +102,7 @@ AFRAME.registerComponent('spawner', {
     */
     var poolName = 'pool__' + this.mixinName;
     var entity = el.sceneEl.components['pool__ramsclone'].requestEntity();
+    entity.setAttribute('class', this.data.class);
     //el.sceneEl.appendChild(entity);
     var matrixWorld = el.object3D.matrixWorld;
     var position = new THREE.Vector3();
