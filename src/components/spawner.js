@@ -15,29 +15,29 @@ AFRAME.registerComponent('spawner', {
   init: function() {
     var data = this.data;
     var el = this.el;
-    this.onHit = this.onHit.bind(this);
     this.spawn = this.spawn.bind(this);
-    this.onMouseDwon = this.onMouseDown.bind(this);
+    this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.mousePressed = false;
     this.mouseTimeStamp = null;
-    this.power = 0;
+    this.power = 0.0;
+    this.spawnVector = new THREE.Vector3(0, 0, -1);
   },
 
   play: function() {
     var el = this.el;
     //el.addEventListener('collide', this.onHit);
     el.addEventListener('spawn', this.spawn);
-    el.sceneEl.canvas.addEventListener('mouseDown', this.onMouseDown);
-    el.sceneEl.canvas.addEventListener('mouseUp', this.onMouseUp);
+    document.addEventListener('mousedown', this.onMouseDown);
+    document.addEventListener('mouseup', this.onMouseUp);
   },
 
   pause: function() {
     var el = this.el;
     //el.removeEventListener('collide', this.onHit);
     el.removeEventListener('spawn', this.spawn);
-    el.sceneEl.canvas.addEventListener('mouseDown', this.onMouseDown);
-    el.sceneEl.canvas.addEventListener('mouseUp', this.onMouseUp);
+    document.removeEventListener('mousedown', this.onMouseDown);
+    document.removeEventListener('mouseup', this.onMouseUp);
 
   },
 
@@ -97,8 +97,8 @@ AFRAME.registerComponent('spawner', {
       });
     });
     */
-    var poolName = 'pool__' + mixinName;
-    var entity = this.sceneEl.components[poolName].requestEntity();
+    var poolName = 'pool__' + this.mixinName;
+    var entity = el.sceneEl.components['pool__ramsclone'].requestEntity();
     //el.sceneEl.appendChild(entity);
     var matrixWorld = el.object3D.matrixWorld;
     var position = new THREE.Vector3();
@@ -118,16 +118,27 @@ AFRAME.registerComponent('spawner', {
       });
     });
     entity.play();
+
     if(entity.body) {
-      entity.body.applyImpulse(
-        new CANNON.Vec3(
-          this.power*this.spawnVector.x,
-          this.power*this.spawnVector.y,
-          this.power*this.spawnVector.z
-        ),
-        new CANNON.Vec3().copy(entity.getComputedAttribute('position'))
-      );
+      var v = entity.body.velocity;
+      console.log(v);
+      // entity.body.velocity.set(
+      //     0,
+      //     0,
+      //     this.power*(-1)
+      // );
+
+      var dir = new THREE.Vector3();
+      el.object3D.getWorldDirection(dir);
+      console.log("Direction: " + dir.x + " " + dir.y + " " + dir.z)
+      entity.body.applyLocalForce(
+  /* impulse */        new CANNON.Vec3(dir.x*(-1*this.power), dir.y*(-1*this.power), dir.z*(-1*this.power)),
+  /* world position */ new CANNON.Vec3(0, 0, 0)
+);
+      console.log(v);
+      console.log("Shot pod at " + this.power + "!");
     }
+
   },
 
   onMouseDown: function() {
@@ -136,13 +147,17 @@ AFRAME.registerComponent('spawner', {
       this.mouseTimeStamp = el.sceneEl.time;
     }
     this.mouseDown = true;
+    console.log("Mouse Down!");
   },
 
   onMouseUp: function() {
     var el = this.el;
+    this.power = (el.sceneEl.time - this.mouseTimeStamp)/this.data.spawnChargeTime * this.data.spawnMagnitude;
+    if( this.power > this.data.spawnMagnitude) this.power = this.data.spawnMagnitude;
+    if(this.mouseDown){
+      el.emit('spawn');
+    }
     this.mouseDown = false;
-    this.power = (el.sceneEl.time - this.mouseTimeStamp)/this.spawnChargeTime * spawnMagnitude;
-    if( this.power > this.spawnMagnitude) this.power = this.spawnMagnitude;
-    el.emit('spawn');
+    console.log("Mouse Up!");
   }
 });
