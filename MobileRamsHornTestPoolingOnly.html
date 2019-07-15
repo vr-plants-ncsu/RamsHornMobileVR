@@ -27,7 +27,7 @@
                        highRefreshRate: true;"
              shadow="autoUpdate: false; type: pcfsoft"
              pool__boxclone="mixin: boxclone; size: 12; dynamic: true"
-             pool__ramsclone="mixin: ramsclone; size: 12; dynamic: true">
+             pool__ramsclone2="mixin: ramsclone2; size: 12; dynamic: true">
       <a-assets>
 
         <!-- Sky Stuff & NCSU logo -->
@@ -200,6 +200,8 @@
                           offset: 0.407 0.11 -0.31;
                           orientation: -0.6250864 0.3855834 -0.5259696 -0.4288922;" class="grabbable"></a-mixin>
 
+        <a-mixin id="ramsclone2" gltf-model="#rams-horn" body="type: dynamic; mass: 0.1; linearDamping: 0.1; angularDamping: 0.1" class="grabbable"></a-mixin>
+
         <a-mixin id="spawnerShapesRam" body="type: dynamic; shape: none; mass: 0;" collision-filter="collisionForces: false"
         shape__main="shape: sphere;
                      radius: 0.17;
@@ -339,7 +341,7 @@
                      data-aframe-inspector-original-camera=""
                      position = "0 1.6 0">
                      <a-entity cursor="fuse: false" visible="false"></a-entity>
-                     <a-entity id="spawner" position="0 0 -1" rotation="0 0 0" spawner="mixin: ramsclone; spawnMagnitude: 75.0">
+                     <a-entity id="spawner" position="0 0 -1" rotation="0 0 0" spawner="mixin: ramsclone2; spawnMagnitude: 75.0">
                      </a-entity>
            </a-entity>
            <!-- <a-entity id="leftHand" static-body="shape: sphere; sphereRadius: 0.02" hand-controls="left" sphere-collider="objects: .grabbable; radius: 0.04" shader grab></a-entity>
