@@ -100,8 +100,9 @@ AFRAME.registerComponent('spawner', {
       });
     });
     */
-    var poolName = 'pool__' + this.mixinName;
-    var entity = el.sceneEl.components['pool__ramsclone'].requestEntity();
+    var poolName = 'pool__' + this.data.mixin;
+    console.log(poolName);
+    var entity = el.sceneEl.components[poolName].requestEntity();
     entity.setAttribute('class', this.data.class);
     //el.sceneEl.appendChild(entity);
     var matrixWorld = el.object3D.matrixWorld;
@@ -159,5 +160,6 @@ AFRAME.registerComponent('spawner', {
     }
     this.mouseDown = false;
     //console.log("Mouse Up!");
+
   }
 });
