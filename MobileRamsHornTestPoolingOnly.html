@@ -17,7 +17,22 @@
      <script src="./src/components/sphere-collider-mod.js"></script>
      <script src="./src/components/spawner.js"></script>
      <script src="./src/components/sticky.js"></script>
+     <!-- <script>
+     AFRAME.registerGeometry('ramshorn', {
+       schema: {
+         depth: {default: 1, min: 0},
+         height: {default: 1, min: 0},
+         width: {default: 1, min: 0},
+       },
 
+       init: function(data) {
+         var geometry = new THREE.Geometry();
+         var mesh = new THREE.Mesh();
+
+
+       }
+     });
+     </script> -->
   </head>
   <body>
     <a-scene physics="debug: false"
@@ -27,7 +42,8 @@
                        highRefreshRate: true;"
              shadow="autoUpdate: false; type: pcfsoft"
              pool__boxclone="mixin: boxclone; size: 12; dynamic: true"
-             pool__ramsclone="mixin: ramsclone; size: 12; dynamic: true">
+             pool__ramsclone="mixin: ramsclone; size: 12; dynamic: true"
+             stats>
       <a-assets>
 
         <!-- Sky Stuff & NCSU logo -->
