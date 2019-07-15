@@ -131,7 +131,6 @@ AFRAME.registerComponent('spawner', {
       //     0,
       //     this.power*(-1)
       // );
-
       var dir = new THREE.Vector3();
       el.object3D.getWorldDirection(dir);
       entity.body.applyLocalForce(
@@ -139,6 +138,7 @@ AFRAME.registerComponent('spawner', {
   /* world position */ new CANNON.Vec3(0, 0.2, 0)
       );
     }
+    entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
 
   },
 
