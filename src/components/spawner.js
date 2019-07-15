@@ -111,7 +111,7 @@ AFRAME.registerComponent('spawner', {
 
     position.setFromMatrixPosition(matrixWorld);
     entity.setAttribute('position', position);
-    entity.setAttribute('mixin', this.data.mixin);
+    //entity.setAttribute('mixin', this.data.mixin);
     entity.setAttribute('class', this.data.class);
     entity.addEventListener('loaded', function() {
       entityRotation = entity.getAttribute('rotation');
@@ -124,8 +124,7 @@ AFRAME.registerComponent('spawner', {
     entity.play();
 
     if(entity.body) {
-      var v = entity.body.velocity;
-      console.log(v);
+      //console.log(v);
       // entity.body.velocity.set(
       //     0,
       //     0,
@@ -134,13 +133,10 @@ AFRAME.registerComponent('spawner', {
 
       var dir = new THREE.Vector3();
       el.object3D.getWorldDirection(dir);
-      //console.log("Direction: " + dir.x + " " + dir.y + " " + dir.z)
       entity.body.applyLocalForce(
   /* impulse */        new CANNON.Vec3(dir.x*(-1*this.power), dir.y*(-1*this.power) + this.power/2.5, dir.z*(-1*this.power)),
   /* world position */ new CANNON.Vec3(0, 0.2, 0)
       );
-      //console.log(v);
-      //console.log("Shot pod at " + this.power + "!");
     }
 
   },
@@ -162,6 +158,6 @@ AFRAME.registerComponent('spawner', {
       el.emit('spawn');
     }
     this.mouseDown = false;
-    console.log("Mouse Up!");
+    //console.log("Mouse Up!");
   }
 });
