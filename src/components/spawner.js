@@ -159,6 +159,7 @@ AFRAME.registerComponent('spawner', {
       el.emit('spawn');
     }
     this.mouseDown = false;
+    //console.log(THREE.Cache);
     //console.log("Mouse Up!");
 
   }

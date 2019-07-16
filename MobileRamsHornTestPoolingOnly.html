@@ -17,7 +17,7 @@
      <script src="./src/components/sphere-collider-mod.js"></script>
      <script src="./src/components/spawner.js"></script>
      <script src="./src/components/sticky.js"></script>
-     <!-- <script>
+     <script>
      AFRAME.registerGeometry('ramshorn', {
        schema: {
          depth: {default: 1, min: 0},
@@ -26,13 +26,41 @@
        },
 
        init: function(data) {
-         var geometry = new THREE.Geometry();
-         var mesh = new THREE.Mesh();
+         var model = null;
+         var geometry = null;
+         var manager = new THREE.LoadingManager();
+         manager.onLoad = function () {
+           //console.log(geometry);
+           this.geometry = geometry;
+           console.log(this.geometry);
+         }
+         var gltfLoader = new THREE.GLTFLoader(manager);
+         gltfLoader.setCrossOrigin('anonymous');
+         const src = "./assets/ramsHorn/Ram's Horn 2.gltf";
+         gltfLoader.load(src, function ( gltf ) {
+           console.log("Gltf: " + gltf);
+           model = gltf.scene;
+           console.log("Model: " + model)
+           model.children.forEach((child) => {
+             console.log(child);
+           });
+           gltf.scene.traverse(function (o) {
+               if (o.isMesh) {
+                 geometry = o.geometry;
+                 //console.log(geometry);
+               }
+           });
 
-
+         }, undefined, function ( error ) {
+           console.error(error);
+         });
+         //console.log(this.geometry);
+         //this.geometry = new THREE.BoxGeometry(data.width, data.height, data.depth);
+         console.log(this.geometry);
+         //console.log(geometry);
        }
      });
-     </script> -->
+     </script>
   </head>
   <body>
     <a-scene physics="debug: false"
@@ -452,7 +480,9 @@
        <a-entity id="log2" gltf-model="#log-gltf" position="0.706 1.542 -4.355" rotation="10.482 -70.113 -70.552" scale="0.75 0.75 0.75" shadow></a-entity> -->
 
        <!-- Boombox -->
-       <!-- <a-entity id="boombox" gltf-model="#boombox-gltf" position="0.297 2.0 -8.246" scale="0.494 0.494 0.494" rotation="0 -35 0" shadow></a-entity>
+       <!-- <a-entity id="boombox" gltf-model="#boombox-gltf" position="0.297 2.0 -8.246" scale="0.494 0.494 0.494" rotation="0 -35 0" shadow></a-entity> -->
+       <!--<a-entity id="boombox" geometry="primitive: ramshorn" position="0.297 2.0 -8.246" scale="1 1 1" rotation="0 -35 0"></a-entity>
+       <!-- Testing for player area (not moving) --> -->
        <!-- Testing for player area (not moving) --> -->
        <!-- <a-box id="player_area" color="tomato" scale="2 2 2" rotation="0 18.630 0" position="-0.463 3.0 -5.464" opacity="0.25" visible="false"></a-box> -->
 
