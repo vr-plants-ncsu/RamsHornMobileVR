@@ -21,6 +21,7 @@ AFRAME.registerComponent('spawner', {
     this.mousePressed = false;
     this.mouseTimeStamp = null;
     this.power = 0.0;
+    this.topSpin = 10.0;
     this.spawnVector = new THREE.Vector3(0, 0, -1);
   },
 
@@ -80,6 +81,8 @@ AFRAME.registerComponent('spawner', {
   spawn: function() {
     var el = this.el;
     var power = this.power;
+    var maxPower = this.spawnMagnitude;
+    var topSpin = this.topSpin;
     /*
     var entity = document.createElement('a-entity');
     var matrixWorld = el.object3D.matrixWorld;
@@ -110,17 +113,26 @@ AFRAME.registerComponent('spawner', {
     var position = new THREE.Vector3();
     //var rotation = el.getAttribute('rotation');
     var worldRotation = new THREE.Quaternion();
-    worldRotation = el.object3D.getWorldQuaternion();
+    el.object3D.getWorldQuaternion(worldRotation);
     //console.log("rotation: " + rotation.x + ", " + rotation.y + ", " + rotation.z);
-    var entityRotation;
+    var entityRotation = new THREE.Quaternion();
+    var rotation =       new THREE.Quaternion();
+    rotation.setFromEuler(  new THREE.Euler(
+                              THREE.Math.degToRad(135),
+                              THREE.Math.degToRad(225),
+                              THREE.Math.degToRad(30) //45 is perfect angle but I wanted it a little offset
+                            )
+                          );
+    entityRotation.copy(worldRotation);
+    entityRotation.multiply(rotation);
     position.setFromMatrixPosition(matrixWorld);
     //entity.setAttribute('position', position);
     entity.object3D.position.copy(position);
     entity.object3D.quaternion.set(
-      worldRotation.x,
-      worldRotation.y,
-      worldRotation.z,
-      worldRotation.w);
+      entityRotation.x,
+      entityRotation.y,
+      entityRotation.z,
+      entityRotation.w);
     //entity.setAttribute('mixin', this.data.mixin);
     entity.setAttribute('class', this.data.class);
 
@@ -176,14 +188,37 @@ AFRAME.registerComponent('spawner', {
         //     this.power*(-1)
         // );
         var dir = new THREE.Vector3();
+        var leftDir = new THREE.Vector3(-1, 0, 0);
+        var worldPos = new THREE.Vector3();
+        //store and normalize direction of spawner
         el.object3D.getWorldDirection(dir);
+        dir.normalize();
+
+        //calculate world axis to local x axis of spawner
+        el.object3D.getWorldPosition(worldPos);
+        leftDir = el.object3D.localToWorld(leftDir);
+        leftDir = leftDir.sub(worldPos);
+        leftDir.normalize();
         console.log("Spawner Direction: " + dir.x + ", " + dir.y + ", " + dir.z );
         console.log(power);
 
         entity.body.applyForce(
     /* impulse */        new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/2.5, dir.z*(-1*power)),
-    /* local position */ new CANNON.Vec3(0, 0.2, 0)
+    /* local position */ new CANNON.Vec3(0, 0, 0)
         );
+        var torque = leftDir;
+        //torque.applyAxisAngle(dir, THREE.Math.degToRad(0))
+        console.log("Top Spin: " + topSpin);
+        var torquePower = (power/this.spawnMagnitude)*topSpin;
+        var cannonTorque = new CANNON.Vec3(
+          torque.x*torquePower,
+          torque.y*torquePower,
+          torque.z*torquePower
+        );
+        entity.body.torque.vadd(
+          /* torque */                            cannonTorque,
+          /* weird requirement for pointer here*/ entity.body.torque
+        )
       }
       //entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
     });
