@@ -96,7 +96,7 @@
 
         <!-- Buffalo (American Bison)-->
         <!--<a-asset-item id="bison-glb" src="./assets/bison.glb" crossorigin="anonymous"></a-asset-item>-->
-        <a-asset-item id="bison2-glb" src="./assets/bison/bison2.glb" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="bison2-glb" src="./assets/bison/bisonLowTex.glb" crossorigin="anonymous"></a-asset-item>
 
         <!-- Rocks -->
         <a-asset-item id="rocks-glb" src="./assets/rocks/rocks.glb" crossorigin="anonymous"></a-asset-item>
@@ -307,7 +307,7 @@
                           orientation: -0.6250864 0.3855834 -0.5259696 -0.4288922;"></a-mixin>
 
         <!-- Bison Sticky Collider -->
-        <a-mixin id="colliderShapesBison" body="type: dynamic; shape: none;"
+        <a-mixin id="colliderShapesBison" body="type: static; shape: none;"
         shape__main="shape: sphere;
                      radius: 0.65;
                      offset: -0.988 1.835 0.0;"
@@ -408,9 +408,9 @@
        </a-entity>
      -->
 
-       <!-- <a-entity id="bison" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="8 2 -8" rotation="0.0 60.849 0.0" scale="1 1 1" sticky=".grabbable" shadow>
+       <a-entity id="bison" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="8 2 -8" rotation="0.0 60.849 0.0" scale="1 1 1" sticky=".grabbable" shadow>
          <!--<a-entity id="bison-sunnies" gltf-model="#sunnies-gltf" position="-2.966 1.626 0.021" rotation="180 90 180" scale="0.032 0.032 0.032" ></a-entity> -->
-       <!--</a-entity>  -->
+       </a-entity>
 
        <!--<a-entity id="bison1" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="21 8.086 -27.146" rotation="0.0 -45 0.0" scale=".75 .75 .75" sticky=".grabbable" shadow>
          <!--<a-entity id="bison-sunnies" gltf-model="#sunnies-gltf" position="-2.966 1.626 0.021" rotation="180 90 180" scale="0.032 0.032 0.032" ></a-entity>
@@ -425,19 +425,19 @@
        <!--</a-entity>
 
        <!-- Rocks -->
-       <!-- <a-entity id="rocks" position="0 0 0">
+       <a-entity id="rocks" position="0 0 0">
          <a-entity id="rocks 1" gltf-model="#rocks-glb" position="12 0 34.06767" scale="1 1 1" rotation="2.790304462287109 -81.16405534264216 1.665588310445303" shadow>
          </a-entity>
          <a-entity id="rocks-2" gltf-model="#rocks-glb" position="12 0 -8" scale="1 1 1" shadow>
          </a-entity>
          <a-entity id="rocks-3" gltf-model="#rocks-glb" position="28.376 -1.206 -63.121" rotation="0.018 158.310 -3.249" scale="1 1 1" shadow>
          </a-entity>
-         <!--<a-entity id="rocks-4" gltf-model="#rocks-glb" position="77.475 2.667 -2.568" rotation="-3.088 49.811 1.013"scale="1 1 1" >-->
-         <!--</a-entity>
-       </a-entity> -->
+         <a-entity id="rocks-4" gltf-model="#rocks-glb" position="77.475 2.667 -2.568" rotation="-3.088 49.811 1.013"scale="1 1 1" >
+         </a-entity>
+       </a-entity>
 
        <!-- More Rocks -->
-       <!-- <a-entity id="rocks_also" position="0 0 0" rotation="0 180 0">
+       <a-entity id="rocks_also" position="0 0 0" rotation="0 180 0">
          <a-entity id="rocks 1" gltf-model="#rocks-glb" position="12 0 34.06767" scale="1 1 1" rotation="2.790304462287109 -81.16405534264216 1.665588310445303" shadow>
          </a-entity>
          <a-entity id="rocks-2" gltf-model="#rocks-glb" position="12 0 -8" scale="1 1 1" shadow>
@@ -446,12 +446,12 @@
          </a-entity>
          <a-entity id="rocks-4" gltf-model="#rocks-glb" position="77.475 2.667 -2.568" rotation="-3.088 49.811 1.013"scale="1 1 1" shadow>
          </a-entity>
-       </a-entity> -->
+       </a-entity>
 
        <!-- Fences -->
-       <!-- <a-entity id="fence" gltf-model="#fence-gltf" position="2.190 2.018 -4.264" rotation="0 -59.267 0.0"></a-entity shadow>
+       <a-entity id="fence" gltf-model="#fence-gltf" position="2.190 2.018 -4.264" rotation="0 -59.267 0.0"></a-entity shadow>
        <a-entity id="fence1" gltf-model="#fence-gltf" position="1.311 2.018 -6.165" rotation="0 -73.128 0.0"></a-entity shadow>
-       <a-entity id="fence2" gltf-model="#fence-gltf" position="1.041 2.018 -8.231" rotation="180.0 -87.911 180.0"></a-entity shadow> -->
+       <a-entity id="fence2" gltf-model="#fence-gltf" position="1.041 2.018 -8.231" rotation="180.0 -87.911 180.0"></a-entity shadow>
 
        <!-- Grass
        <a-entity id="grass" gltf-model="#grass-glb" position="-0.144 2.5 -9.649" scale="2 2 2" rotation="0 0 0" ></a-entity>
@@ -476,8 +476,8 @@
          <a-entity gltf-model="#grass-glb" scale="2 2 2" position="0 0 5" ></a-entity>
        </a-entity>
        <!-- Log -->
-       <!-- <a-entity id="log" gltf-model="#log-gltf" position="0.784 2.356 -5.967" rotation="0.0 100.397 0.0" scale="0.75 0.75 0.75" shadow></a-entity>
-       <a-entity id="log2" gltf-model="#log-gltf" position="0.706 1.542 -4.355" rotation="10.482 -70.113 -70.552" scale="0.75 0.75 0.75" shadow></a-entity> -->
+       <a-entity id="log" gltf-model="#log-gltf" position="0.784 2.356 -5.967" rotation="0.0 100.397 0.0" scale="0.75 0.75 0.75" shadow></a-entity>
+       <a-entity id="log2" gltf-model="#log-gltf" position="0.706 1.542 -4.355" rotation="10.482 -70.113 -70.552" scale="0.75 0.75 0.75" shadow></a-entity>
 
        <!-- Boombox -->
        <!-- <a-entity id="boombox" gltf-model="#boombox-gltf" position="0.297 2.0 -8.246" scale="0.494 0.494 0.494" rotation="0 -35 0" shadow></a-entity> -->
