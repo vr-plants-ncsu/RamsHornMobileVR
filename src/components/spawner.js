@@ -79,6 +79,7 @@ AFRAME.registerComponent('spawner', {
 
   spawn: function() {
     var el = this.el;
+    var power = this.power;
     /*
     var entity = document.createElement('a-entity');
     var matrixWorld = el.object3D.matrixWorld;
@@ -114,6 +115,7 @@ AFRAME.registerComponent('spawner', {
     entity.setAttribute('position', position);
     //entity.setAttribute('mixin', this.data.mixin);
     entity.setAttribute('class', this.data.class);
+
     entity.addEventListener('loaded', function() {
       entityRotation = entity.getAttribute('rotation');
       entity.setAttribute('rotation', {
@@ -122,23 +124,30 @@ AFRAME.registerComponent('spawner', {
         z: entityRotation.z + rotation.z
       });
     });
-    entity.play();
 
-    if(entity.body) {
-      //console.log(v);
-      // entity.body.velocity.set(
-      //     0,
-      //     0,
-      //     this.power*(-1)
-      // );
-      var dir = new THREE.Vector3();
-      el.object3D.getWorldDirection(dir);
-      entity.body.applyLocalForce(
-  /* impulse */        new CANNON.Vec3(dir.x*(-1*this.power), dir.y*(-1*this.power) + this.power/2.5, dir.z*(-1*this.power)),
-  /* world position */ new CANNON.Vec3(0, 0.2, 0)
-      );
-    }
-    entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
+
+    entity.addEventListener('play', function() {
+      console.log("play!");
+      if(entity.body) {
+        //console.log(v);
+        // entity.body.velocity.set(
+        //     0,
+        //     0,
+        //     this.power*(-1)
+        // );
+        var dir = new THREE.Vector3();
+        el.object3D.getWorldDirection(dir);
+        console.log(dir);
+        console.log(power);
+        entity.body.applyLocalForce(
+    /* impulse */        new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/2.5, dir.z*(-1*power)),
+    /* world position */ new CANNON.Vec3(0, 0.2, 0)
+        );
+      }
+      //entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
+    });
+    
+    entity.play();
 
   },
 
