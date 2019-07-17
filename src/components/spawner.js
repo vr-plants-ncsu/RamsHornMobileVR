@@ -21,7 +21,7 @@ AFRAME.registerComponent('spawner', {
     this.mousePressed = false;
     this.mouseTimeStamp = null;
     this.power = 0.0;
-    this.topSpin = 10.0;
+    this.topSpin = 15.0;
     this.spawnVector = new THREE.Vector3(0, 0, -1);
   },
 
@@ -81,7 +81,7 @@ AFRAME.registerComponent('spawner', {
   spawn: function() {
     var el = this.el;
     var power = this.power;
-    var maxPower = this.spawnMagnitude;
+    var maxPower = this.data.spawnMagnitude;
     var topSpin = this.topSpin;
     /*
     var entity = document.createElement('a-entity');
@@ -208,8 +208,11 @@ AFRAME.registerComponent('spawner', {
         );
         var torque = leftDir;
         //torque.applyAxisAngle(dir, THREE.Math.degToRad(0))
-        console.log("Top Spin: " + topSpin);
-        var torquePower = (power/this.spawnMagnitude)*topSpin;
+        var torquePower = (power/maxPower)*topSpin;
+        console.log("Power: " + power);
+        console.log("Max Power: " + maxPower);
+        console.log("Max Top Spin: " + topSpin);
+        console.log("Top Spin: " + torquePower);
         var cannonTorque = new CANNON.Vec3(
           torque.x*torquePower,
           torque.y*torquePower,
@@ -220,7 +223,7 @@ AFRAME.registerComponent('spawner', {
           /* weird requirement for pointer here*/ entity.body.torque
         )
       }
-      //entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
+      entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
     });
 
     entity.play();
