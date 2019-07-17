@@ -108,26 +108,66 @@ AFRAME.registerComponent('spawner', {
     //el.sceneEl.appendChild(entity);
     var matrixWorld = el.object3D.matrixWorld;
     var position = new THREE.Vector3();
-    var rotation = el.getAttribute('rotation');
+    //var rotation = el.getAttribute('rotation');
+    var worldRotation = new THREE.Quaternion();
+    worldRotation = el.object3D.getWorldQuaternion();
+    //console.log("rotation: " + rotation.x + ", " + rotation.y + ", " + rotation.z);
     var entityRotation;
-
     position.setFromMatrixPosition(matrixWorld);
-    entity.setAttribute('position', position);
+    //entity.setAttribute('position', position);
+    entity.object3D.position.copy(position);
+    entity.object3D.quaternion.set(
+      worldRotation.x,
+      worldRotation.y,
+      worldRotation.z,
+      worldRotation.w);
     //entity.setAttribute('mixin', this.data.mixin);
     entity.setAttribute('class', this.data.class);
 
     entity.addEventListener('loaded', function() {
-      entityRotation = entity.getAttribute('rotation');
-      entity.setAttribute('rotation', {
-        x: entityRotation.x + rotation.x,
-        y: entityRotation.y + rotation.y,
-        z: entityRotation.z + rotation.z
-      });
+      //entityRotation = entity.object3D.quaternion;
+      //entity.setAttribute('rotation', {
+      //  x: entityRotation.x + rotation.x,
+      //  y: entityRotation.y + rotation.y,
+      //  z: entityRotation.z + rotation.z
+      //});
+      //console.log("rotation: " + entityRotation.x
+                  // + ", " + entityRotation.y
+                  // + ", " + entityRotation.z
+                  // + ", " + entityRotation.w );
+      // entity.object3D.rotation.set(
+      //   entityRotation.x + rotation.x,
+      //   entityRotation.y + rotation.y,
+      //   entityRotation.z + rotation.z
+      // );
+      // entity.object3D.quaternion.copy(
+      //   entityRotation
+      // );
+      //entity.object3D.quaternion.setFromRotationMatrix(matrixWorld);
     });
-
 
     entity.addEventListener('body-loaded', function() {
       console.log("body loaded");
+      //var spawnerRotation = el.object3D;
+      //el.object3D.getWorldQuaternion(spawnerRotation);
+      //entityRotation = entity.object3D.quaternion;
+
+      // entity.object3D.quaternion.copy(
+      //   spawnerRotation
+      // );
+      // entity.object3D.quaternion.set(
+      //   spawnerRotation.x,
+      //   spawnerRotation.y,
+      //   spawnerRotation.z,
+      //   spawnerRotation.w
+      // );
+      // var spawnedRotation = new THREE.Quaternion();
+      // entity.object3D.getWorldQuaternion(spawnedRotation);
+      // console.log("spawned rotation: "
+      //             + spawnedRotation.x
+      //             + ", " + spawnedRotation.y
+      //             + ", " + spawnedRotation.z
+      //             + ", " + spawnedRotation.w );
       if(entity.body) {
         //console.log(v);
         // entity.body.velocity.set(
@@ -137,11 +177,12 @@ AFRAME.registerComponent('spawner', {
         // );
         var dir = new THREE.Vector3();
         el.object3D.getWorldDirection(dir);
-        console.log(dir);
+        console.log("Spawner Direction: " + dir.x + ", " + dir.y + ", " + dir.z );
         console.log(power);
-        entity.body.applyLocalForce(
+
+        entity.body.applyForce(
     /* impulse */        new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/2.5, dir.z*(-1*power)),
-    /* world position */ new CANNON.Vec3(0, 0.2, 0)
+    /* local position */ new CANNON.Vec3(0, 0.2, 0)
         );
       }
       //entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
