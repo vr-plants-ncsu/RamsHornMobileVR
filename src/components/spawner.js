@@ -126,8 +126,8 @@ AFRAME.registerComponent('spawner', {
     });
 
 
-    entity.addEventListener('play', function() {
-      console.log("play!");
+    entity.addEventListener('body-loaded', function() {
+      console.log("body loaded");
       if(entity.body) {
         //console.log(v);
         // entity.body.velocity.set(
@@ -146,7 +146,7 @@ AFRAME.registerComponent('spawner', {
       }
       //entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
     });
-    
+
     entity.play();
 
   },
