@@ -201,11 +201,12 @@ AFRAME.registerComponent('spawner', {
         leftDir.normalize();
         console.log("Spawner Direction: " + dir.x + ", " + dir.y + ", " + dir.z );
         console.log(power);
-        entity.body.velocity = new CANNON.Vec3(0, 0, 0);
-        entity.body.applyForce(
-    /* impulse */        new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/1.5, dir.z*(-1*power)),
-    /* local position */ new CANNON.Vec3(0, 0, 0)
-        );
+        //entity.body.velocity = new CANNON.Vec3(0, 0, 0);
+        entity.body.velocity = new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/1.5, dir.z*(-1*power));
+    //     entity.body.applyForce(
+    // /* impulse */        new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/1.5, dir.z*(-1*power)),
+    // /* local position */ new CANNON.Vec3(0, 0, 0)
+    //     );
         var torque = leftDir;
         //torque.applyAxisAngle(dir, THREE.Math.degToRad(0))
         var torquePower = (power/maxPower)*topSpin;
