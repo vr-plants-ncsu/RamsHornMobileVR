@@ -203,7 +203,7 @@ AFRAME.registerComponent('spawner', {
         console.log(power);
 
         entity.body.applyForce(
-    /* impulse */        new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/2.5, dir.z*(-1*power)),
+    /* impulse */        new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/1.5, dir.z*(-1*power)),
     /* local position */ new CANNON.Vec3(0, 0, 0)
         );
         var torque = leftDir;
