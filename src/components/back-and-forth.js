@@ -93,5 +93,30 @@ AFRAME.registerComponent('back-and-forth', {
 
   tick: function() {
 
+    distance = this.data.distance;
+    location = this.location;
+    easingDistance = this.easingDistance;
+    if(location < easingDistance) {
+      stepUp();
+    }
+    else if(location >= easingDistance) {
+      stepConstant();
+    } else if(location >= distance - easingDistance) {
+      stepDown();
+    }
+    //easing towards maximum velocity
+    function stepUp() {
+    
+    }
+
+    //moving at maximum velocity
+    function stepConstant() {
+
+    }
+
+    //easing down to zero velocity
+    function stepDown() {
+
+    }
   }
 });

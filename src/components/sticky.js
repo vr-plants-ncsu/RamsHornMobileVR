@@ -17,6 +17,8 @@ AFRAME.registerComponent('sticky', {
     //"Stuck" state to add to stickable elements - used instead of array of els
     this.STUCK_STATE = 'stuck';
 
+    this.nextKey = 0;
+
 
     this.sticky = true;
     //Handles elements that collide
@@ -24,7 +26,7 @@ AFRAME.registerComponent('sticky', {
     this.physics = this.system;
 
     //Keeps track of constraints - may be be useful for "removing" constraints
-    this.constraints = [];
+    this.constraints = {};
     //this.constraint = null;
 
     //Bind Event Handlers
@@ -111,8 +113,21 @@ AFRAME.registerComponent('sticky', {
     constraints = this.constraints;
     let constraint;
     constraint = new CANNON.LockConstraint(this.el.body, hitEl.body);
-    this.constraints.push(constraint);
-    this.system.addConstraint(constraints[(constraints.length - 1)]);
+    //this.constraints.push(constraint);
+    constraints[this.nextKey] = constraint;
+    this.system.addConstraint(constraints[(this.nextKey)]);
+    hitEl.setAttribute("id", this.nextKey);
+    this.nextKey++;
+  },
+
+  onUnstick: function(evt) {
+    const stuckEl = evt.detail.el;
+    constraints = this.constraints;
+    var key = stuckEl.id;
+    if(constraints[key]) {
+      this.system.removeConstraint(constraints[key]);
+      delete constraints[key];
+    }
   },
 
   makeSound: function() {

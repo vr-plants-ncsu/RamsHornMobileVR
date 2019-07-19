@@ -114,7 +114,7 @@ AFRAME.registerComponent('sticky', {
     constraint = new CANNON.LockConstraint(this.el.body, hitEl.body);
     if(!constraints[hitEl]) {
       constraints[hitEl] = constraint;
-      this.system.addConstraint(constraints[(constraints.length - 1)]);
+      this.system.addConstraint(constraints[hitEl]);
     }
   },
 
