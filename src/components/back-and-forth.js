@@ -12,15 +12,20 @@ AFRAME.registerComponent('back-and-forth', {
     //make sure speed is stored as a positive value
     if(this.data.speed < 0)
       this.data.speed = this.data.speed * -1;
-    }
 
     //used to determine second endpoint
-    var direction = new THREE.Vector3(
-                  direction.x,
-                  direction.y,
-                  direction.z
+    this.direction = new THREE.Vector3(
+                  this.data.direction.x,
+                  this.data.direction.y,
+                  this.data.direction.z
                 );
-    var temp = this.el.getAttribute('position');
+    this.direction.normalize();
+
+    var temp = new THREE.Vector3(
+      this.el.object3D.position.x,
+      this.el.object3D.position.y,
+      this.el.object3D.position.z
+    );
 
     //first endpoint stored as a THREE.Vector3 object
     this.origin = new THREE.Vector3(
@@ -35,17 +40,18 @@ AFRAME.registerComponent('back-and-forth', {
                         temp.z
                       );
     //current location along path stored as a THREE.Vector3 object
-    this.location = new THREE.Vector3(
-                      origin.x,
-                      origin.y,
-                      origin.z
-                    );
+    // this.location = new THREE.Vector3(
+    //                   origin.x,
+    //                   origin.y,
+    //                   origin.z
+    //                 );
+
     this.distanceTraveled = 0;
     //calculating correct position for second endpoint
     temp.set(
-      direction.x*distance,
-      direction.y*distance,
-      direction.z*distance
+      this.direction.x*distance,
+      this.direction.y*distance,
+      this.direction.z*distance
     );
     this.destination.add(temp);
 
@@ -65,11 +71,20 @@ AFRAME.registerComponent('back-and-forth', {
       later step functions will understand 0 acceleration means to skip the acceleration
       steps and move at maximum velocity throughout animation
     */
+    this.acceleration = new THREE.Vector3(
+      this.direction.x,
+      this.direction.y,
+      this.direction.z
+    );
+    var speed = this.data.speed;
     if(this.easingDistance != 0) {
-      this.acceleration = (speed*speed)/(2*this.easingDistance);
+      this.acceleration.multiplyScalar(Math.sign(speed)*(speed*speed)/(2*this.easingDistance) );
     } else {
-      this.acceleration = 0;
+      this.acceleration.set(0, 0, 0);
     }
+
+    this.velocity = new THREE.Vector3(0, 0, 0);
+    //this.moveDir = "Forward";
 
     /*
     Relevant formulas used above / proof:
@@ -96,27 +111,46 @@ AFRAME.registerComponent('back-and-forth', {
     distance = this.data.distance;
     location = this.location;
     easingDistance = this.easingDistance;
-    if(location < easingDistance) {
-      stepUp();
-    }
-    else if(location >= easingDistance) {
-      stepConstant();
-    } else if(location >= distance - easingDistance) {
-      stepDown();
-    }
-    //easing towards maximum velocity
-    function stepUp() {
-    
-    }
+    acceleration = this.acceleration;
+    velocity = this.velocity;
+    distanceTraveled = this.distanceTraveled;
+    moveDir = this.moveDir;
 
-    //moving at maximum velocity
-    function stepConstant() {
+    // if( (distance > 0 && distanceTraveled >= distance ) ||
+    //     (distance < 0 && -distanceTraveled <= distance ) )
+    // {
+    //   velocity.multiplyScalar(-1);
+    //   acceleration.multiplyScalar(-1);
+    //   distaneTraveled = 0;
+    // }
+    //
+    // if(distanceTraveled < easingDistance) {
+    //   stepUp();
+    // } else if(distanceTraveled >= (distance - easingDistance) ) {
+    //   stepDown();
+    // }
+    //
+    // //easing towards maximum velocity
+    // function stepUp() {
+    //   velocity.add(acceleration);
+    // }
+    //
+    // //easing down to zero velocity
+    // function stepDown() {
+    //   velocity.sub(acceleration);
+    // }
+    //
+    // //location += velocity
+    // this.el.object3D.position.add(velocity);
+    // console.log(this.el.object3D.position);
+    // this.distanceTravled += velocity.length();
 
-    }
-
-    //easing down to zero velocity
-    function stepDown() {
-
-    }
+    this.elobject.position.add(
+      new THREE.Vector3(
+        Math.sin(this.el.sceneEl.time),
+        0,
+        0
+      )
+    );
   }
 });

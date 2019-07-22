@@ -116,6 +116,8 @@ AFRAME.registerComponent('sticky', {
     //this.constraints.push(constraint);
     constraints[this.nextKey] = constraint;
     this.system.addConstraint(constraints[(this.nextKey)]);
+    hitEl.removeAttribute('sleepy');
+    hitEl.setAttribute('sleepy', 'allowSleep: false; linearDamping: 0.1; angularDamping: 0.1');
     hitEl.setAttribute("id", this.nextKey);
     this.nextKey++;
   },
