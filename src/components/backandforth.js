@@ -152,5 +152,10 @@ AFRAME.registerComponent('back-and-forth', {
         Math.sin(this.el.sceneEl.time/1200)/20
       )
     );
+    //this.el.object3D.updateMatrixWorld(true);
+    //this.el.object3D.children.forEach( function(child) {
+    //  child.updateMatrix();
+    //  child.updateMatrixWorld(true);
+    //})
   }
 });

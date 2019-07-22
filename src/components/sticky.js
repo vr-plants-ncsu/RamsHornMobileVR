@@ -116,10 +116,26 @@ AFRAME.registerComponent('sticky', {
     //this.constraints.push(constraint);
     constraints[this.nextKey] = constraint;
     this.system.addConstraint(constraints[(this.nextKey)]);
-    hitEl.removeAttribute('sleepy');
+    //hitEl.removeAttribute('sleepy');
     hitEl.setAttribute('sleepy', 'allowSleep: false; linearDamping: 0.1; angularDamping: 0.1');
+    hitEl.setAttribute('body', 'type', 'static');
     hitEl.setAttribute("id", this.nextKey);
-    this.nextKey++;
+    //this.el.object3D.attach(hitEl.object3D);
+    //hitEl.object3D.parent = this.el.object3D;
+
+    //hitEl.object3D.position = this.el.object3D.localToWorld(hitEl.object3D.position);
+    // var tempPos = new THREE.Vector3(0, 0, 0);
+    // var tempRot = new THREE.Quaternion(0, 0, 0, 1);
+    // tempPos.copy(hitEl.object3D.position);
+    // tempRot.copy(hitEl.object3D.rotation);
+    // console.log(tempPos);
+    // this.el.object3D.updateMatrix();
+    // var matrix = this.el.object3D.matrix;
+    // console.log(matrix);
+    //this.el.add(hitEl);
+    // hitEl.object3D.position = hitEl.object3D.worldToLocal(hitEl.object3D.position);
+    // console.log(hitEl.object3D.position);
+    // this.nextKey++;
   },
 
   onUnstick: function(evt) {
@@ -130,6 +146,7 @@ AFRAME.registerComponent('sticky', {
       this.system.removeConstraint(constraints[key]);
       delete constraints[key];
     }
+    //this.el.object3D.remove(stuckEl.object3D);
   },
 
   makeSound: function() {

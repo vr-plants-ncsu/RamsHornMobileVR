@@ -224,7 +224,7 @@ AFRAME.registerComponent('spawner', {
           /* weird requirement for pointer here*/ entity.body.torque
         )
       }
-      entity.setAttribute('sleepy', 'allowSleep: false; linearDamping: 0.1; angularDamping: 0.1');
+      entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
     });
 
     entity.play();
