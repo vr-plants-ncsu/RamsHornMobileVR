@@ -19,48 +19,48 @@
      <script src="./src/components/sticky.js"></script>
      <script src="./src/components/backandforth.js"></script>
      <script>
-     AFRAME.registerGeometry('ramshorn', {
-       schema: {
-         depth: {default: 1, min: 0},
-         height: {default: 1, min: 0},
-         width: {default: 1, min: 0},
-       },
-
-       init: function(data) {
-         var model = null;
-         var geometry = null;
-         var manager = new THREE.LoadingManager();
-         manager.onLoad = function () {
-           //console.log(geometry);
-           this.geometry = geometry;
-           console.log(this.geometry);
-         }
-         var gltfLoader = new THREE.GLTFLoader(manager);
-         gltfLoader.setCrossOrigin('anonymous');
-         const src = "./assets/ramsHorn/Ram's Horn 2.gltf";
-         gltfLoader.load(src, function ( gltf ) {
-           console.log("Gltf: " + gltf);
-           model = gltf.scene;
-           console.log("Model: " + model)
-           model.children.forEach((child) => {
-             console.log(child);
-           });
-           gltf.scene.traverse(function (o) {
-               if (o.isMesh) {
-                 geometry = o.geometry;
-                 //console.log(geometry);
-               }
-           });
-
-         }, undefined, function ( error ) {
-           console.error(error);
-         });
-         //console.log(this.geometry);
-         //this.geometry = new THREE.BoxGeometry(data.width, data.height, data.depth);
-         console.log(this.geometry);
-         //console.log(geometry);
-       }
-     });
+     // AFRAME.registerGeometry('ramshorn', {
+     //   schema: {
+     //     depth: {default: 1, min: 0},
+     //     height: {default: 1, min: 0},
+     //     width: {default: 1, min: 0},
+     //   },
+     //
+     //   init: function(data) {
+     //     var model = null;
+     //     var geometry = null;
+     //     var manager = new THREE.LoadingManager();
+     //     manager.onLoad = function () {
+     //       //console.log(geometry);
+     //       this.geometry = geometry;
+     //       console.log(this.geometry);
+     //     }
+     //     var gltfLoader = new THREE.GLTFLoader(manager);
+     //     gltfLoader.setCrossOrigin('anonymous');
+     //     const src = "./assets/ramsHorn/Ram's Horn 2.gltf";
+     //     gltfLoader.load(src, function ( gltf ) {
+     //       console.log("Gltf: " + gltf);
+     //       model = gltf.scene;
+     //       console.log("Model: " + model)
+     //       model.children.forEach((child) => {
+     //         console.log(child);
+     //       });
+     //       gltf.scene.traverse(function (o) {
+     //           if (o.isMesh) {
+     //             geometry = o.geometry;
+     //             //console.log(geometry);
+     //           }
+     //       });
+     //
+     //     }, undefined, function ( error ) {
+     //       console.error(error);
+     //     });
+     //     //console.log(this.geometry);
+     //     //this.geometry = new THREE.BoxGeometry(data.width, data.height, data.depth);
+     //     console.log(this.geometry);
+     //     //console.log(geometry);
+     //   }
+     // });
      </script>
   </head>
   <body>
@@ -109,7 +109,7 @@
         <a-asset-item id="sunnies-gltf" src="./assets/Poly Models/sunnies/Sunglasses_01.gltf" crossorigin="anonymous"></a-asset-item>
 
         <!-- Fence -->
-        <!-- <a-asset-item id="fence-gltf" src="./assets/Poly Models/fence/SM_PicketFence_02.gltf" crossorigin="anonymous"></a-asset-item> -->
+        <a-asset-item id="fence-gltf" src="./assets/Poly Models/fence/SM_PicketFence_02.gltf" crossorigin="anonymous"></a-asset-item>
 
         <!-- Boombox -->
         <a-asset-item id="boombox-gltf" src="./assets/boombox/Boombox.gltf" crossorigin="anonymous"></a-asset-item>
@@ -453,9 +453,9 @@
        </a-entity>
 
        <!-- Fences -->
-       <!-- <a-entity id="fence" gltf-model="#fence-gltf" position="2.190 2.018 -4.264" rotation="0 -59.267 0.0"></a-entity shadow>
+       <a-entity id="fence" gltf-model="#fence-gltf" position="2.190 2.018 -4.264" rotation="0 -59.267 0.0"></a-entity shadow>
        <a-entity id="fence1" gltf-model="#fence-gltf" position="1.311 2.018 -6.165" rotation="0 -73.128 0.0"></a-entity shadow>
-       <a-entity id="fence2" gltf-model="#fence-gltf" position="1.041 2.018 -8.231" rotation="180.0 -87.911 180.0"></a-entity shadow> -->
+       <a-entity id="fence2" gltf-model="#fence-gltf" position="1.041 2.018 -8.231" rotation="180.0 -87.911 180.0"></a-entity shadow>
 
        <!-- Grass
        <a-entity id="grass" gltf-model="#grass-glb" position="-0.144 2.5 -9.649" scale="2 2 2" rotation="0 0 0" ></a-entity>

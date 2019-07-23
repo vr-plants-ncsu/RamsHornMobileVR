@@ -18,48 +18,48 @@
      <script src="./src/components/spawner.js"></script>
      <script src="./src/components/sticky.js"></script>
      <script>
-     AFRAME.registerGeometry('ramshorn', {
-       schema: {
-         depth: {default: 1, min: 0},
-         height: {default: 1, min: 0},
-         width: {default: 1, min: 0},
-       },
-
-       init: function(data) {
-         var model = null;
-         var geometry = null;
-         var manager = new THREE.LoadingManager();
-         manager.onLoad = function () {
-           //console.log(geometry);
-           this.geometry = geometry;
-           console.log(this.geometry);
-         }
-         var gltfLoader = new THREE.GLTFLoader(manager);
-         gltfLoader.setCrossOrigin('anonymous');
-         const src = "./assets/ramsHorn/Ram's Horn 2.gltf";
-         gltfLoader.load(src, function ( gltf ) {
-           console.log("Gltf: " + gltf);
-           model = gltf.scene;
-           console.log("Model: " + model)
-           model.children.forEach((child) => {
-             console.log(child);
-           });
-           gltf.scene.traverse(function (o) {
-               if (o.isMesh) {
-                 geometry = o.geometry;
-                 //console.log(geometry);
-               }
-           });
-
-         }, undefined, function ( error ) {
-           console.error(error);
-         });
-         //console.log(this.geometry);
-         //this.geometry = new THREE.BoxGeometry(data.width, data.height, data.depth);
-         console.log(this.geometry);
-         //console.log(geometry);
-       }
-     });
+     // AFRAME.registerGeometry('ramshorn', {
+     //   schema: {
+     //     depth: {default: 1, min: 0},
+     //     height: {default: 1, min: 0},
+     //     width: {default: 1, min: 0},
+     //   },
+     //
+     //   init: function(data) {
+     //     var model = null;
+     //     var geometry = null;
+     //     var manager = new THREE.LoadingManager();
+     //     manager.onLoad = function () {
+     //       //console.log(geometry);
+     //       this.geometry = geometry;
+     //       console.log(this.geometry);
+     //     }
+     //     var gltfLoader = new THREE.GLTFLoader(manager);
+     //     gltfLoader.setCrossOrigin('anonymous');
+     //     const src = "./assets/ramsHorn/Ram's Horn 2.gltf";
+     //     gltfLoader.load(src, function ( gltf ) {
+     //       console.log("Gltf: " + gltf);
+     //       model = gltf.scene;
+     //       console.log("Model: " + model)
+     //       model.children.forEach((child) => {
+     //         console.log(child);
+     //       });
+     //       gltf.scene.traverse(function (o) {
+     //           if (o.isMesh) {
+     //             geometry = o.geometry;
+     //             //console.log(geometry);
+     //           }
+     //       });
+     //
+     //     }, undefined, function ( error ) {
+     //       console.error(error);
+     //     });
+     //     //console.log(this.geometry);
+     //     //this.geometry = new THREE.BoxGeometry(data.width, data.height, data.depth);
+     //     console.log(this.geometry);
+     //     //console.log(geometry);
+     //   }
+     // });
      </script>
   </head>
   <body>
