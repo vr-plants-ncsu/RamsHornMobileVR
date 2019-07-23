@@ -117,7 +117,7 @@ AFRAME.registerComponent('sticky', {
     constraints[this.nextKey] = constraint;
     this.system.addConstraint(constraints[(this.nextKey)]);
     //hitEl.removeAttribute('sleepy');
-    hitEl.setAttribute('sleepy', 'allowSleep: false; linearDamping: 0.1; angularDamping: 0.1');
+    hitEl.setAttribute('sleepy', 'allowSleep: false; linearDamping: 0.0; angularDamping: 0.1');
     //hitEl.setAttribute('body', 'type', 'static');
     hitEl.setAttribute("id", this.nextKey);
     //this.el.object3D.attach(hitEl.object3D);
@@ -135,7 +135,7 @@ AFRAME.registerComponent('sticky', {
     //this.el.add(hitEl);
     // hitEl.object3D.position = hitEl.object3D.worldToLocal(hitEl.object3D.position);
     // console.log(hitEl.object3D.position);
-    // this.nextKey++;
+    this.nextKey++;
   },
 
   onUnstick: function(evt) {
@@ -146,6 +146,7 @@ AFRAME.registerComponent('sticky', {
       this.system.removeConstraint(constraints[key]);
       delete constraints[key];
     }
+    stuckEl.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
     //this.el.object3D.remove(stuckEl.object3D);
   },
 
