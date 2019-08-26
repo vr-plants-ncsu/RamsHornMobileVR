@@ -83,59 +83,54 @@ AFRAME.registerComponent('shooter', {
     var power = this.power;
     var maxPower = this.data.spawnMagnitude;
     var topSpin = this.topSpin;
-    /*
-    var entity = document.createElement('a-entity');
-    var matrixWorld = el.object3D.matrixWorld;
-    var position = new THREE.Vector3();
-    var rotation = el.getAttribute('rotation');
-    var entityRotation;
 
-    position.setFromMatrixPosition(matrixWorld);
-    entity.setAttribute('position', position);
-
-    entity.setAttribute('mixin', this.data.mixin);
-    entity.setAttribute('class', this.data.class);
-    entity.addEventListener('loaded', function() {
-      entityRotation = entity.getAttribute('rotation');
-      entity.setAttribute('rotation', {
-        x: entityRotation.x + rotation.x,
-        y: entityRotation.y + rotation.y,
-        z: entityRotation.z + rotation.z
-      });
-    });
-    */
+    //Get pool of spawned objects
     var poolName = 'pool__' + this.data.mixin;
     //console.log(poolName);
+
+    //Get entity from pool
     var entity = el.sceneEl.components[poolName].requestEntity();
+
+    //Set up entity
     entity.setAttribute('class', this.data.class);
     //el.sceneEl.appendChild(entity);
+
+    //Set up tranform properties ('shooter' orientation multiplied by 'entity' spawn oritentation)
+  )
     var matrixWorld = el.object3D.matrixWorld;
     var position = new THREE.Vector3();
-    //var rotation = el.getAttribute('rotation');
     var worldRotation = new THREE.Quaternion();
     el.object3D.getWorldQuaternion(worldRotation);
-    //console.log("rotation: " + rotation.x + ", " + rotation.y + ", " + rotation.z);
     var entityRotation = new THREE.Quaternion();
     var rotation =       new THREE.Quaternion();
+
+    //It would be best to store this in data passed to class, rather than hard-coded here
     rotation.setFromEuler(  new THREE.Euler(
                               THREE.Math.degToRad(135),
                               THREE.Math.degToRad(225),
                               THREE.Math.degToRad(30) //45 is perfect angle but I wanted it a little offset
                             )
                           );
+    //copy orientation of 'shooter' to object, then multiply by default object rotation to get correct emission orientation
     entityRotation.copy(worldRotation);
     entityRotation.multiply(rotation);
+
+    //Get 'shooter' location as world transform value
     position.setFromMatrixPosition(matrixWorld);
     //entity.setAttribute('position', position);
+
+    //Start emitted object in same position as 'shooter'
     entity.object3D.position.copy(position);
     entity.object3D.quaternion.set(
       entityRotation.x,
       entityRotation.y,
       entityRotation.z,
       entityRotation.w);
-    //entity.setAttribute('mixin', this.data.mixin);
+
+    //Make object 'grabbable' (holdover from 'spawner" class)
     entity.setAttribute('class', this.data.class);
 
+    //I think we might want to put everything above in here...
     entity.addEventListener('loaded', function() {
       //entityRotation = entity.object3D.quaternion;
       //entity.setAttribute('rotation', {
@@ -158,38 +153,14 @@ AFRAME.registerComponent('shooter', {
       //entity.object3D.quaternion.setFromRotationMatrix(matrixWorld);
     });
 
+    //Wait for physcis body to load, then add force to "shoot" emitted object
     entity.addEventListener('body-loaded', function() {
-      //console.log("body loaded");
-      //var spawnerRotation = el.object3D;
-      //el.object3D.getWorldQuaternion(spawnerRotation);
-      //entityRotation = entity.object3D.quaternion;
-
-      // entity.object3D.quaternion.copy(
-      //   spawnerRotation
-      // );
-      // entity.object3D.quaternion.set(
-      //   spawnerRotation.x,
-      //   spawnerRotation.y,
-      //   spawnerRotation.z,
-      //   spawnerRotation.w
-      // );
-      // var spawnedRotation = new THREE.Quaternion();
-      // entity.object3D.getWorldQuaternion(spawnedRotation);
-      // console.log("spawned rotation: "
-      //             + spawnedRotation.x
-      //             + ", " + spawnedRotation.y
-      //             + ", " + spawnedRotation.z
-      //             + ", " + spawnedRotation.w );
+      //probably not necessary...
       if(entity.body) {
-        //console.log(v);
-        // entity.body.velocity.set(
-        //     0,
-        //     0,
-        //     this.power*(-1)
-        // );
         var dir = new THREE.Vector3();
         var leftDir = new THREE.Vector3(-1, 0, 0);
         var worldPos = new THREE.Vector3();
+
         //store and normalize direction of spawner
         el.object3D.getWorldDirection(dir);
         dir.normalize();
@@ -199,9 +170,12 @@ AFRAME.registerComponent('shooter', {
         leftDir = el.object3D.localToWorld(leftDir);
         leftDir = leftDir.sub(worldPos);
         leftDir.normalize();
+        //Logs for testing...
         //console.log("Spawner Direction: " + dir.x + ", " + dir.y + ", " + dir.z );
         //console.log(power);
         //entity.body.velocity = new CANNON.Vec3(0, 0, 0);
+
+        //opted to set starting 'velocity' rather than add force - more predictable movement
         entity.body.velocity = new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/1.5, dir.z*(-1*power));
     //     entity.body.applyForce(
     // /* impulse */        new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/1.5, dir.z*(-1*power)),
@@ -233,13 +207,11 @@ AFRAME.registerComponent('shooter', {
         with the sticky object's movement without having to calculate physics continuously. Currently the "stuck" objects
         have their "sleepy" attribute forced to false to allow them to still be subjected to the forces of a physical constraint
         to the "sticky" object.
-
-        Ideal solution would be to "deactivate" the physics body and "reactivate" it, avoiding generating new objects. This is
-        available through the A-Frame Physics System, using the "pause" function of the body class
       */
       entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
     });
 
+    //activate physics body?
     entity.play();
 
   },

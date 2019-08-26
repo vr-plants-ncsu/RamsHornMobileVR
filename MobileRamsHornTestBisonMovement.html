@@ -15,7 +15,7 @@
      <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
      <script src="https://unpkg.com/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script>
      <script src="./src/components/sphere-collider-mod.js"></script>
-     <script src="./src/components/spawner.js"></script>
+     <script src="./src/components/shooter.js"></script>
      <script src="./src/components/sticky.js"></script>
      <script src="./src/components/backandforth.js"></script>
      <script>
@@ -389,10 +389,10 @@
                      data-aframe-inspector-original-camera=""
                      position = "0 1.6 0">
                      <a-entity cursor="fuse: false" visible="false"></a-entity>
-                     <a-entity id="spawner"
+                     <a-entity id="shooter"
                                position="0 -0.6 -1"
                                rotation="0 0 0"
-                               spawner="mixin: ramsclone; spawnMagnitude: 10.0">
+                               shooter="mixin: ramsclone; spawnMagnitude: 10.0">
                      </a-entity>
            </a-entity>
            <!-- <a-entity id="leftHand" static-body="shape: sphere; sphereRadius: 0.02" hand-controls="left" sphere-collider="objects: .grabbable; radius: 0.04" shader grab></a-entity>
