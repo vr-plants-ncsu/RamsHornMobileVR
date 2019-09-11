@@ -13,7 +13,7 @@ AFRAME.registerComponent('sticky', {
     //Elements to handle "stick" events
     this.els = [];
     //Elements that are "stuck" - May not be necessary, taking out for now
-    //this.stuckEls = []
+    this.stuckEls = []
     //"Stuck" state to add to stickable elements - used instead of array of els
     this.STUCK_STATE = 'stuck';
 
@@ -53,7 +53,7 @@ AFRAME.registerComponent('sticky', {
 
     //Push entities into list of els to interesect
     if (this.data.objects) {
-      objectEls = this.el.sceneEl.querySelectorAll(data.objects);
+      objectEls = this.el.sceneEl.querySelectorAll(this.data.objects);
     } else {
       //If objects not defined, stick everything
       objectEls = this.el.sceneEl.children;
@@ -66,7 +66,7 @@ AFRAME.registerComponent('sticky', {
     var hitEl = evt.detail.body.el;
     //Check list of els if objects is defined
     if(this.data.objects) {
-      this.els.forEach(checkStickable(hitEl));
+      this.els.forEach(checkStickable);
     } else {
       //If objects is not defined, just check if stuck
       if(!hitEl.is(this.STUCK_STATE)) {
@@ -76,7 +76,7 @@ AFRAME.registerComponent('sticky', {
       }
     }
     //check if one of the
-    function checkStickable (el, hitEl) {
+    function checkStickable (el) {
       if(el === hitEl && !hitEl.is(this.STUCK_STATE)) {
         hitEl.addState(this.STUCK_STATE);
         this.el.emit('stick', {el: hitEl});
