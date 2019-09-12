@@ -13,7 +13,7 @@ AFRAME.registerComponent('sticky', {
     //Elements to handle "stick" events
     this.els = [];
     //Elements that are "stuck" - May not be necessary, taking out for now
-    this.stuckEls = []
+    this.stuckEls = [];
     //"Stuck" state to add to stickable elements - used instead of array of els
     this.STUCK_STATE = 'stuck';
 
@@ -27,6 +27,7 @@ AFRAME.registerComponent('sticky', {
 
     //Keeps track of constraints - may be be useful for "removing" constraints
     this.constraints = {};
+
     //this.constraint = null;
 
     //Bind Event Handlers
@@ -48,7 +49,7 @@ AFRAME.registerComponent('sticky', {
     //el.removeEventListener('makeSound', this.makeSound);
   },
 
-  update: function() {
+  tick: function() {
     let objectEls;
 
     //Push entities into list of els to interesect
@@ -63,6 +64,8 @@ AFRAME.registerComponent('sticky', {
   },
 
   onHit: function(evt) {
+    var el = this.el;
+    var stuckState = this.STUCK_STATE;
     var hitEl = evt.detail.body.el;
     //Check list of els if objects is defined
     if(this.data.objects) {
@@ -76,66 +79,31 @@ AFRAME.registerComponent('sticky', {
       }
     }
     //check if one of the
-    function checkStickable (el) {
-      if(el === hitEl && !hitEl.is(this.STUCK_STATE)) {
-        hitEl.addState(this.STUCK_STATE);
-        this.el.emit('stick', {el: hitEl});
+    function checkStickable (element) {
+      if(element === hitEl && !hitEl.is(this.STUCK_STATE)) {
+        hitEl.addState(stuckState);
+        el.emit('stick', {el: hitEl});
       }
     }
-
-  //  if(hitEl.getAttribute('class') ==
-    //}
-    //if(!hitEl.components.grab.hitEl) {
-      //console.log("Not holding anything!")
-      //if(hitEl.components.grab.grabbing) {
-        //this.el.emit("spawn");
-        //console.log("Spawned!");
-      //}
-      //return;
-    //}
-
-    //Writing a better? way
-    //if(!AFRAME.utils.entity.getComponent(hitEl, 'grab') || AFRAME.utils.entity.getComponent(hitEl, 'grab.hitEl', '.') === Undefined || !AFRAME.utils.entity.getComponent(hitEl, 'grab.grabbing', '.')) {return;}
-    //this.el.emit('spawn');
-    //if(hitEl.components.grab.grabbing) {
-    //  console.log("Holding something!")
-    //}
-
-    //console.log(hitEl.components.grab);
-    //if(hitEl.grabbing) {
-    //  this.spawn();
-    //}
-    //console.log(evt.detail.body.el.id); */
   },
 
   onStick: function(evt) {
+    var nextKey = this.nextKey;
+    //element to be stuck
     const hitEl = evt.detail.el;
+    //array of constraints
     constraints = this.constraints;
+    //make new constraint var
     let constraint;
     constraint = new CANNON.LockConstraint(this.el.body, hitEl.body);
-    //this.constraints.push(constraint);
+    //add constraint to array for tracking
     constraints[this.nextKey] = constraint;
+    //add constraint to physics system
     this.system.addConstraint(constraints[(this.nextKey)]);
-    //hitEl.removeAttribute('sleepy');
     hitEl.setAttribute('sleepy', 'allowSleep: false; linearDamping: 0.0; angularDamping: 0.1');
-    //hitEl.setAttribute('body', 'type', 'static');
     hitEl.setAttribute("id", this.nextKey);
-    //this.el.object3D.attach(hitEl.object3D);
-    //hitEl.object3D.parent = this.el.object3D;
-
-    //hitEl.object3D.position = this.el.object3D.localToWorld(hitEl.object3D.position);
-    // var tempPos = new THREE.Vector3(0, 0, 0);
-    // var tempRot = new THREE.Quaternion(0, 0, 0, 1);
-    // tempPos.copy(hitEl.object3D.position);
-    // tempRot.copy(hitEl.object3D.rotation);
-    // console.log(tempPos);
-    // this.el.object3D.updateMatrix();
-    // var matrix = this.el.object3D.matrix;
-    // console.log(matrix);
-    //this.el.add(hitEl);
-    // hitEl.object3D.position = hitEl.object3D.worldToLocal(hitEl.object3D.position);
-    // console.log(hitEl.object3D.position);
-    this.nextKey++;
+    this.stuckEls[nextKey] = hitEl;
+    nextKey++;
   },
 
   onUnstick: function(evt) {
