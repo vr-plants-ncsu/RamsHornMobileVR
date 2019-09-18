@@ -5,6 +5,8 @@ AFRAME.registerComponent('sticky', {
     //strength: {type: 'number', default: },
     //sound: {type: 'audio'}
     sticky: {default: true},
+    update_delay: {default: 1},
+    stuck_item_limit: {default: 5},
   },
 
   init: function() {
@@ -29,7 +31,12 @@ AFRAME.registerComponent('sticky', {
     //Keeps track of constraints - may be be useful for "removing" constraints
     this.constraints = {};
 
-    //this.constraint = null;
+    //make variables for data Stuff
+    this.delay = parseInt(data.update_delay) * 1000;
+    if(this.delay < 0) this.delay = 0;
+    this.itemLimit = parseInt(data.stuck_item_limit);
+    if(this.itemLimit < 0) this.itemLimit = 0;
+    this.timestamp = -1;
 
     //Bind Event Handlers
     this.onHit = this.onHit.bind(this);
@@ -78,8 +85,19 @@ AFRAME.registerComponent('sticky', {
     // }
     // // Convert from NodeList to array
     // this.els = Array.prototype.slice.call(objectEls);
-    if(this.stuckNum >= 5) {
-      this.el.emit('unstick-all', {});
+
+    //Check if number of 'stuck' elements is above limit
+    if(this.stuckNum >= this.itemLimit && this.itemLimit > 0) {
+      //if not currently in 'delay' period (after 'stuckNum' exceeds 'itemLimit'), set timestamp for delay
+      if(this.delay > 0 && this.timestamp < 0) {
+        //set timestamp to time delay
+        this.timestamp = this.el.sceneEl.time;
+      }
+      //unstick and reset timestamp if time past timestamp exceeds delay (this will always be true for a '0' delay)
+      if(this.el.sceneEl.time - this.timestamp > this.delay) {
+        this.timestamp = -1;
+        this.el.emit('unstick-all', {});
+      }
     }
   },
 
