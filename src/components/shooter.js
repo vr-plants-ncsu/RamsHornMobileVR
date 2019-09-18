@@ -255,9 +255,10 @@ AFRAME.registerComponent('shooter', {
 
   onMouseUp: function() {
     var el = this.el;
-    this.power = (el.sceneEl.time - this.mouseTimeStamp)/this.data.spawnChargeTime * this.data.spawnMagnitude;
-    if( this.power > this.data.spawnMagnitude) this.power = this.data.spawnMagnitude;
     if(this.mouseDown){
+      this.power = (el.sceneEl.time - this.mouseTimeStamp)/this.data.spawnChargeTime * this.data.spawnMagnitude;
+      if( this.power > this.data.spawnMagnitude)
+        this.power = this.data.spawnMagnitude;
       el.emit('spawn');
     }
     this.mouseDown = false;
