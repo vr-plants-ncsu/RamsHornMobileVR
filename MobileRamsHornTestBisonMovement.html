@@ -18,6 +18,7 @@
      <script src="./src/components/shooter.js"></script>
      <script src="./src/components/sticky.js"></script>
      <script src="./src/components/backandforth.js"></script>
+     <script src="./src/components/gif-shader.js"></script>
      <script>
      // AFRAME.registerGeometry('ramshorn', {
      //   schema: {
@@ -107,6 +108,9 @@
         <img id="sand_norm" src="./assets/sand/sgfodj1a/sgfodj1a_4K_Normal.jpg" crossorigin="anonymous">
         <img id="sand_rough" src="./assets/sand/sgfodj1a/sgfodj1a_4K_Roughness.jpg" crossorigin="anonymous">
 
+        <!-- 'poof' effect -->
+        <img id="star-poof" src="./assets/giphy.gif" crossorigin="anonymous">
+
 
         <!-- Rams Horn -->
         <a-asset-item id="rams-horn" src="./assets/ramsHorn/Ram's Horn 2.gltf" crossorigin="anonymous"></a-asset-item>
@@ -146,6 +150,9 @@
         <img id="proboscidea-louisianica-png" src="./assets/ramsHorn/proboscideaLouisianicaFlower.png" transparent crossorigin="anonymous"></img>
 
         <a-mixin id="pl-flower" geometry="primitive: plane; height: 1; width: 1; rotation: -90 -45 0" material="src: #proboscidea-louisianica-png; transparent: true; shader: flat"></a-mixin>
+
+        <!-- poof -->
+        <a-mixin id="poof" geometry="primitive: plane; height: 1; width: 1; rotation: -90 0 0" material="shader: gif; src: #star-poof; transparent: true;"></a-mixin>
         <!-- Colliders -->
         <a-mixin id="colliderShapesRam" body="type: static; shape: none; mass: 0.1; linearDamping: 0.1; angularDamping: 0.1"
 
@@ -493,7 +500,7 @@
        <!-- flower test-->
        <a-entity id="flower" mixin="pl-flower" position="-.598 2.5 -8.793" rotation="0 -15 0" scale="-1 1 1"></a-entity>
        <a-entity id="flower" mixin="pl-flower" position="1.412 2.479 -4.649" rotation="0 -121.99 0"></a-entity>
-
+       <a-entity id="poof" mixin="poof" position="-2.819 2.479 -0.483" rotation="0 168.71"></a-entity>
        <!-- Testing for player area (not moving) -->
        <!-- <a-box id="player_area" color="tomato" scale="2 2 2" rotation="0 18.630 0" position="-0.463 3.0 -5.464" opacity="0.25" visible="false"></a-box> -->
 

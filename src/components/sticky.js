@@ -4,6 +4,7 @@ AFRAME.registerComponent('sticky', {
     objects: {default: ''},
     //strength: {type: 'number', default: },
     //sound: {type: 'audio'}
+    sticky: {default: true},
   },
 
   init: function() {
@@ -17,11 +18,10 @@ AFRAME.registerComponent('sticky', {
     this.stuckNum = 0;
     //"Stuck" state to add to stickable elements - used instead of array of els
     this.STUCK_STATE = 'stuck';
+    this.UNSTUCK_STATE = 'unstuck';
 
     this.nextKey = 0;
-
-
-    this.sticky = true;
+    this.sticky = this.data.sticky;
     //Handles elements that collide
     this.hitEl = null;
     this.physics = this.system;
@@ -36,6 +36,8 @@ AFRAME.registerComponent('sticky', {
     this.onStick = this.onStick.bind(this);
     this.onUnstick = this.onUnstick.bind(this);
     this.unstickAll = this.unstickAll.bind(this);
+    this.turnOnSticky = this.turnOnSticky.bind(this);
+    this.turnOffSticky = this.turnOffSticky.bind(this);
   },
 
   play: function() {
@@ -44,6 +46,12 @@ AFRAME.registerComponent('sticky', {
     el.addEventListener('stick', this.onStick);
     el.addEventListener('unstick', this.onUnstick);
     el.addEventListener('unstick-all', this.unstickAll);
+    if(this.sticky) {
+      el.addEventListener('sticky-off', this.turnOffSticky);
+
+    } else {
+      el.addEventListener('sticky-on', this.turnOnSticky);
+    }
     //el.addEventListener('makeSound', this.makeSound);
   },
 
@@ -53,21 +61,23 @@ AFRAME.registerComponent('sticky', {
     el.removeEventListener('stick', this.onStick);
     el.removeEventListener('unstick', this.onUnstick);
     el.removeEventListener('unstick-all', this.unstickAll);
+    el.removeEventListener('sticky-off', this.turnOffSticky);
+    el.removeEventListener('sticky-on', this.turnOnSticky);
     //el.removeEventListener('makeSound', this.makeSound);
   },
 
   tick: function() {
-    let objectEls;
-
-    //Push entities into list of els to interesect
-    if (this.data.objects) {
-      objectEls = this.el.sceneEl.querySelectorAll(this.data.objects);
-    } else {
-      //If objects not defined, stick everything
-      objectEls = this.el.sceneEl.children;
-    }
-    // Convert from NodeList to array
-    this.els = Array.prototype.slice.call(objectEls);
+    // let objectEls;
+    //
+    // //Push entities into list of els to interesect
+    // if (this.data.objects) {
+    //   objectEls = this.el.sceneEl.querySelectorAll(this.data.objects);
+    // } else {
+    //   //If objects not defined, stick everything
+    //   objectEls = this.el.sceneEl.children;
+    // }
+    // // Convert from NodeList to array
+    // this.els = Array.prototype.slice.call(objectEls);
     if(this.stuckNum >= 5) {
       this.el.emit('unstick-all', {});
     }
@@ -80,11 +90,12 @@ AFRAME.registerComponent('sticky', {
     // console.log("stuck state: " + this.STUCK_STATE);
     // console.log("stuck state?: " + stuckState);
     //Check list of els if objects is defined
+    if(!this.sticky) return;
     if(this.data.objects) {
       //this.els.forEach(checkStickable);
       var hitElClass = hitEl.getAttribute('class');
       if(hitElClass = this.data.objects) {
-        if(!hitEl.is(this.STUCK_STATE)) {
+        if(!hitEl.is(this.STUCK_STATE) && !hitEl.is(this.UNSTUCK_STATE)) {
           hitEl.addState(this.STUCK_STATE);
           //probably can get away with emitting from hit element?
           this.el.emit('stick', {el: hitEl});
@@ -94,7 +105,7 @@ AFRAME.registerComponent('sticky', {
       }
     } else {
       //If objects is not defined, just check if stuck
-      if(!hitEl.is(this.STUCK_STATE)) {
+      if(!hitEl.is(this.STUCK_STATE) && !hitEl.is(this.UNSTUCK_STATE)) {
         hitEl.addState(this.STUCK_STATE);
         //probably can get away with emitting from hit element?
         this.el.emit('stick', {el: hitEl});
@@ -150,8 +161,23 @@ AFRAME.registerComponent('sticky', {
       this.stuckEls[key] = null;
       this.stuckNum--;
       stuckEl.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
+      stuckEl.addState(this.UNSTUCK_STATE);
+      stuckEl.removeState(this.STUCK_STATE);
       //this.el.object3D.remove(stuckEl.object3D);
     }
+  },
+
+  turnOnSticky: function() {
+      this.sticky = true;
+      el.removeEventListener('sticky-on', this.turnOnSticky);
+      el.addEventListener('sticky-off', this.turnOffSticky);
+  },
+
+  turnOffSticky: function() {
+      this.sticky = false;
+      el.removeEventListener('sticky-off', this.turnOffSticky);
+      el.addEventListener('sticky-on', this.turnOnSticky);
+
   },
 
   unstickAll: function(evt) {
