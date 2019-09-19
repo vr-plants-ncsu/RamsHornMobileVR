@@ -1,12 +1,12 @@
 //Based off of elements of Don McCurdy's 'grab.js' component
 AFRAME.registerComponent('sticky', {
   schema: {
-    objects: {default: ''},
+    objects: {type: 'string', default: ''},
     //strength: {type: 'number', default: },
     //sound: {type: 'audio'}
-    sticky: {default: true},
-    update_delay: {default: 1},
-    stuck_item_limit: {default: 5},
+    sticky: {default: true, type: 'boolean'},
+    update_delay: {default: 1, type: 'number'},
+    stuck_item_limit: {default: 5, type: 'number'},
   },
 
   init: function() {
