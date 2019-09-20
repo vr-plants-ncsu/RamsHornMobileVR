@@ -21,7 +21,7 @@ AFRAME.registerComponent('shooter', {
     this.mousePressed = false;
     this.mouseTimeStamp = null;
     this.power = 0.0;
-    this.topSpin = 15.0;
+    this.topSpin = 5.0;
     this.spawnVector = new THREE.Vector3(0, 0, -1);
   },
 
@@ -160,26 +160,6 @@ AFRAME.registerComponent('shooter', {
 
     entity.addEventListener('body-loaded', function() {
       //console.log("body loaded");
-      //var spawnerRotation = el.object3D;
-      //el.object3D.getWorldQuaternion(spawnerRotation);
-      //entityRotation = entity.object3D.quaternion;
-
-      // entity.object3D.quaternion.copy(
-      //   spawnerRotation
-      // );
-      // entity.object3D.quaternion.set(
-      //   spawnerRotation.x,
-      //   spawnerRotation.y,
-      //   spawnerRotation.z,
-      //   spawnerRotation.w
-      // );
-      // var spawnedRotation = new THREE.Quaternion();
-      // entity.object3D.getWorldQuaternion(spawnedRotation);
-      // console.log("spawned rotation: "
-      //             + spawnedRotation.x
-      //             + ", " + spawnedRotation.y
-      //             + ", " + spawnedRotation.z
-      //             + ", " + spawnedRotation.w );
       if(entity.body) {
         //console.log(v);
         // entity.body.velocity.set(
