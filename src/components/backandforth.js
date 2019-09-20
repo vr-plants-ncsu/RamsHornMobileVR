@@ -6,6 +6,10 @@ AFRAME.registerComponent('back-and-forth', {
     easing: {type: 'number', default: 0.5}
   },
 
+  init: function() {
+    this.startingPosition = new THREE.Vector3
+    this.startingPosition.copy(this.el.object3D.position);
+  },
   // init: function() {
   //   var distance = this.distance;
   //
@@ -108,6 +112,8 @@ AFRAME.registerComponent('back-and-forth', {
 
   tick: function() {
 
+
+
     // distance = this.data.distance;
     // location = this.location;
     // easingDistance = this.easingDistance;
@@ -145,12 +151,10 @@ AFRAME.registerComponent('back-and-forth', {
     // console.log(this.el.object3D.position);
     // this.distanceTravled += velocity.length();
 
-    this.el.object3D.position.add(
-      new THREE.Vector3(
-        0,
-        0,
-        Math.sin(this.el.sceneEl.time/1200)/20
-      )
+    this.el.object3D.position.set(
+        this.startingPosition.x,
+        this.startingPosition.y,
+        this.startingPosition.z + Math.sin(this.el.sceneEl.time/1000)
     );
     //this.el.object3D.updateMatrixWorld(true);
     //this.el.object3D.children.forEach( function(child) {
