@@ -401,7 +401,7 @@
       <!-- Ground -->
       <!-- <a-plane id="ground_ugh" segmentsWidth="128" segmentsHeight="128" position="0 2 0" rotation="-90 0 0" width="1024" height="1024" material="shader: standard; color: #d88436; roughness: 100.00; metalness: 0.00" ></a-plane> -->
       <!--<a-box static-body visible="true" id="ground" segmentsWidth="128" segmentsHeight="128" position="0 -14.01 0" rotation="0 0 0" width="1024" height="32" depth="1024" material="shader: standard; color: #d88436; roughness: 100.00; metalness: 0.00;" ></a-box>-->
-      <a-box static-body id="ground" position="0 -14 0" rotation="0 0 0" width="1024" height="32" depth="1024" material="shader: standard; ambientOcclusionMap: #sand_ao; ambientOcclusionTextureRepeat: 128 128; normalMap: #sand_norm; normalTextureRepeat: 128 128; src: #sand; repeat: 128 128; roughnessMap: #sand_rough; roughnessTextureRepeat: 128 128; roughness: 1.0;"></a-box>
+      <a-box static-body id="ground" floor-despawner="objects: .grabbable, pooled_objects: ramsclone; default_delay: 1.0" position="0 -14 0" rotation="0 0 0" width="1024" height="32" depth="1024" material="shader: standard; ambientOcclusionMap: #sand_ao; ambientOcclusionTextureRepeat: 128 128; normalMap: #sand_norm; normalTextureRepeat: 128 128; src: #sand; repeat: 128 128; roughnessMap: #sand_rough; roughnessTextureRepeat: 128 128; roughness: 1.0;"></a-box>
 
       <!-- Sky -->
       <a-sky src="#sky" radius="512" ></a-sky>
@@ -420,7 +420,7 @@
                      <a-entity id="shooter"
                                position="0 -0.6 -1"
                                rotation="0 0 0"
-                               shooter="mixin: ramsclone; spawnMagnitude: 10.0">
+                               shooter="mixin: ramsclone; spawnMagnitude: 10.0; top_spin: 10.0">
                      </a-entity>
            </a-entity>
            <!-- <a-entity id="leftHand" static-body="shape: sphere; sphereRadius: 0.02" hand-controls="left" sphere-collider="objects: .grabbable; radius: 0.04" shader grab></a-entity>

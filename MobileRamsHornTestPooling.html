@@ -17,6 +17,7 @@
      <script src="./src/components/sphere-collider-mod.js"></script>
      <script src="./src/components/spawner.js"></script>
      <script src="./src/components/sticky.js"></script>
+     <script src="./src/components/floor-despawner.js"> </script>
 
   </head>
   <body>
@@ -320,7 +321,23 @@
       <!-- Ground -->
       <!-- <a-plane id="ground_ugh" segmentsWidth="128" segmentsHeight="128" position="0 2 0" rotation="-90 0 0" width="1024" height="1024" material="shader: standard; color: #d88436; roughness: 100.00; metalness: 0.00" ></a-plane> -->
       <!--<a-box static-body visible="true" id="ground" segmentsWidth="128" segmentsHeight="128" position="0 -14.01 0" rotation="0 0 0" width="1024" height="32" depth="1024" material="shader: standard; color: #d88436; roughness: 100.00; metalness: 0.00;" ></a-box>-->
-      <a-box static-body id="ground" position="0 -14 0" rotation="0 0 0" width="1024" height="32" depth="1024" material="shader: standard; ambientOcclusionMap: #sand_ao; ambientOcclusionTextureRepeat: 128 128; normalMap: #sand_norm; normalTextureRepeat: 128 128; src: #sand; repeat: 128 128; roughnessMap: #sand_rough; roughnessTextureRepeat: 128 128; roughness: 1.0;"></a-box>
+      <a-box id="ground"
+             static-body
+             position="0 -14 0"
+             rotation="0 0 0"
+             width="1024"
+             height="32"
+             depth="1024"
+             material="shader: standard;
+                       ambientOcclusionMap: #sand_ao;
+                       ambientOcclusionTextureRepeat: 128 128;
+                       normalMap: #sand_norm;
+                       normalTextureRepeat: 128 128;
+                       src: #sand; repeat: 128 128;
+                       roughnessMap: #sand_rough;
+                       roughnessTextureRepeat: 128 128;
+                       roughness: 1.0;"
+            ></a-box>
 
       <!-- Sky -->
       <a-sky src="#sky" radius="512" ></a-sky>

@@ -7,6 +7,7 @@ AFRAME.registerComponent('shooter', {
     rotation: {type: 'vec3', default: {x: 0, y: 0, z: 0}},
     mixin: {default: ''},
     class: {default: 'grabbable'},
+    top_spin: {default: 0, type: 'number'},
     spawnVector: {type: 'vec3', default: {x: 0, y: 0, z: -1}},
     spawnMagnitude: {type: 'number', default: 1.0},
     spawnChargeTime: {type: 'number', default: 1000}
@@ -21,7 +22,7 @@ AFRAME.registerComponent('shooter', {
     this.mousePressed = false;
     this.mouseTimeStamp = null;
     this.power = 0.0;
-    this.topSpin = 5.0;
+    this.topSpin = this.data.top_spin;
     this.spawnVector = new THREE.Vector3(0, 0, -1);
   },
 
@@ -134,76 +135,51 @@ AFRAME.registerComponent('shooter', {
       entityRotation.z,
       entityRotation.w);
     //entity.setAttribute('mixin', this.data.mixin);
-    entity.setAttribute('class', this.data.class);
-
-    entity.addEventListener('loaded', function() {
-      //entityRotation = entity.object3D.quaternion;
-      //entity.setAttribute('rotation', {
-      //  x: entityRotation.x + rotation.x,
-      //  y: entityRotation.y + rotation.y,
-      //  z: entityRotation.z + rotation.z
-      //});
-      //console.log("rotation: " + entityRotation.x
-                  // + ", " + entityRotation.y
-                  // + ", " + entityRotation.z
-                  // + ", " + entityRotation.w );
-      // entity.object3D.rotation.set(
-      //   entityRotation.x + rotation.x,
-      //   entityRotation.y + rotation.y,
-      //   entityRotation.z + rotation.z
-      // );
-      // entity.object3D.quaternion.copy(
-      //   entityRotation
-      // );
-      //entity.object3D.quaternion.setFromRotationMatrix(matrixWorld);
-    });
-
-    entity.addEventListener('body-loaded', function() {
-      //console.log("body loaded");
-      if(entity.body) {
-        //console.log(v);
-        // entity.body.velocity.set(
-        //     0,
-        //     0,
-        //     this.power*(-1)
-        // );
-        var dir = new THREE.Vector3();
-        var leftDir = new THREE.Vector3(-1, 0, 0);
-        var worldPos = new THREE.Vector3();
-        //store and normalize direction of spawner
-        el.object3D.getWorldDirection(dir);
-        dir.normalize();
-
-        //calculate world axis to local x axis of spawner
-        el.object3D.getWorldPosition(worldPos);
-        leftDir = el.object3D.localToWorld(leftDir);
-        leftDir = leftDir.sub(worldPos);
-        leftDir.normalize();
-        //console.log("Spawner Direction: " + dir.x + ", " + dir.y + ", " + dir.z );
-        //console.log(power);
-        //entity.body.velocity = new CANNON.Vec3(0, 0, 0);
-        entity.body.velocity = new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/1.5, dir.z*(-1*power));
-    //     entity.body.applyForce(
-    // /* impulse */        new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/1.5, dir.z*(-1*power)),
-    // /* local position */ new CANNON.Vec3(0, 0, 0)
-    //     );
-        var torque = leftDir;
-        //torque.applyAxisAngle(dir, THREE.Math.degToRad(0))
-        var torquePower = (power/maxPower)*topSpin;
-        //console.log("Power: " + power);
-        //console.log("Max Power: " + maxPower);
-        //console.log("Max Top Spin: " + topSpin);
-        //console.log("Top Spin: " + torquePower);
-        var cannonTorque = new CANNON.Vec3(
-          torque.x*torquePower,
-          torque.y*torquePower,
-          torque.z*torquePower
-        );
-        entity.body.torque.vadd(
-          /* torque */                            cannonTorque,
-          /* weird requirement for pointer here*/ entity.body.torque
-        )
+    //entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
+    var body = entity.getAttribute('body');
+    console.log("body: ");
+      if(entity.body.isLoaded == true || entity.is('shot')) {
+        console.log("body already exists, fire");
+        entity.play()
+        launch();
+      } else {
+        console.log("loading new physics body: ");
+        entity.addState('shot');
+        entity.play()
+        //launch()
+        entity.addEventListener('body-loaded', launch);
       }
+
+    function launch() {
+      var dir = new THREE.Vector3();
+      var leftDir = new THREE.Vector3(-1, 0, 0);
+      var worldPos = new THREE.Vector3();
+      //store and normalize direction of spawner
+      el.object3D.getWorldDirection(dir);
+      dir.normalize();
+
+      //calculate world axis to local x axis of spawner
+      el.object3D.getWorldPosition(worldPos);
+      leftDir = el.object3D.localToWorld(leftDir);
+      leftDir = leftDir.sub(worldPos);
+      leftDir.normalize();
+
+      entity.body.velocity = new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/1.5, dir.z*(-1*power));
+      console.log("Shot Velocity: " + entity.body.velocity);
+      var torque = leftDir;
+
+      var torquePower = (power/maxPower)*topSpin;
+
+      var cannonTorque = new CANNON.Vec3(
+        torque.x*torquePower,
+        torque.y*torquePower,
+        torque.z*torquePower
+      );
+
+      entity.body.torque.vadd(
+        /* torque */                            cannonTorque,
+        /* weird requirement for pointer here*/ entity.body.torque
+      );
       //Important for reducing physics system overehad.. I *think* this is turned off when "stuck", which is kind of a problem
       /*
         Note: fixing "sleepy" probelm w/ stuck objects:
@@ -217,11 +193,53 @@ AFRAME.registerComponent('shooter', {
         Ideal solution would be to "deactivate" the physics body and "reactivate" it, avoiding generating new objects. This is
         available through the A-Frame Physics System, using the "pause" function of the body class
       */
-      entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
-    });
-
-    entity.play();
-
+      //entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
+      //entity.play();
+    }
+    // entity.addEventListener('body-loaded', function() {
+    //
+    //   var dir = new THREE.Vector3();
+    //   var leftDir = new THREE.Vector3(-1, 0, 0);
+    //   var worldPos = new THREE.Vector3();
+    //   //store and normalize direction of spawner
+    //   el.object3D.getWorldDirection(dir);
+    //   dir.normalize();
+    //
+    //   //calculate world axis to local x axis of spawner
+    //   el.object3D.getWorldPosition(worldPos);
+    //   leftDir = el.object3D.localToWorld(leftDir);
+    //   leftDir = leftDir.sub(worldPos);
+    //   leftDir.normalize();
+    //
+    //   entity.body.velocity = new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/1.5, dir.z*(-1*power));
+    //   var torque = leftDir;
+    //
+    //   var torquePower = (power/maxPower)*topSpin;
+    //
+    //   var cannonTorque = new CANNON.Vec3(
+    //     torque.x*torquePower,
+    //     torque.y*torquePower,
+    //     torque.z*torquePower
+    //   );
+    //   entity.body.torque.vadd(
+    //     /* torque */                            cannonTorque,
+    //     /* weird requirement for pointer here*/ entity.body.torque
+    //   );
+    //   //Important for reducing physics system overehad.. I *think* this is turned off when "stuck", which is kind of a problem
+    //   /*
+    //     Note: fixing "sleepy" probelm w/ stuck objects:
+    //
+    //     It may be possible to create "dummy" emitted objects for the "sticky" scenario, and then when a collision
+    //     occurs just create objects in the same place and parent them to the "sticky" object. This would allow them to travel
+    //     with the sticky object's movement without having to calculate physics continuously. Currently the "stuck" objects
+    //     have their "sleepy" attribute forced to false to allow them to still be subjected to the forces of a physical constraint
+    //     to the "sticky" object.
+    //
+    //     Ideal solution would be to "deactivate" the physics body and "reactivate" it, avoiding generating new objects. This is
+    //     available through the A-Frame Physics System, using the "pause" function of the body class
+    //   */
+    //   entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
+    // });
   },
 
   onMouseDown: function() {

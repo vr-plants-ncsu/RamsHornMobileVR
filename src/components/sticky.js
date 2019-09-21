@@ -153,7 +153,7 @@ AFRAME.registerComponent('sticky', {
     this.constraints[this.nextKey] = constraint;
     //add constraint to physics system
     this.system.addConstraint(this.constraints[(this.nextKey)]);
-    hitEl.setAttribute('sleepy', 'allowSleep: false; linearDamping: 0.0; angularDamping: 0.1');
+    //hitEl.setAttribute('sleepy', 'allowSleep: false; linearDamping: 0.0; angularDamping: 0.1');
     hitEl.setAttribute("id", this.nextKey);
     this.stuckEls[this.nextKey] = hitEl;
     console.log(this);
@@ -178,7 +178,7 @@ AFRAME.registerComponent('sticky', {
       delete constraints[key];
       this.stuckEls[key] = null;
       this.stuckNum--;
-      stuckEl.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
+      //stuckEl.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
       stuckEl.addState(this.UNSTUCK_STATE);
       stuckEl.removeState(this.STUCK_STATE);
       //this.el.object3D.remove(stuckEl.object3D);
