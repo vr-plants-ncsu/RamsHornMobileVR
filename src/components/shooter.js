@@ -138,18 +138,17 @@ AFRAME.registerComponent('shooter', {
     //entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
     var body = entity.getAttribute('body');
     //console.log("body: ");
-      if( (typeof(entity.body) !== 'undefined' && entity.body.isLoaded == true) || entity.is('shot')) {
+      if((typeof(entity.body) !== 'undefined' && entity.body.isLoaded == true) || entity.is('shot')) {
         //console.log("body already exists, fire");
-        //entity.play()
+        entity.play()
         launch();
       } else {
         //console.log("loading new physics body: ");
         entity.addState('shot');
-        //entity.play()
+        entity.play()
         //launch()
         entity.addEventListener('body-loaded', launch);
       }
-      entity.play()
 
     function launch() {
       var dir = new THREE.Vector3();
@@ -167,20 +166,25 @@ AFRAME.registerComponent('shooter', {
 
       entity.body.velocity = new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/1.5, dir.z*(-1*power));
       //console.log("Shot Velocity: " + entity.body.velocity);
-      var torque = new CANNON.Vec3(
-        leftDir.x,
-        leftDir.y,
-        leftDir.z
-      );
+      var torque = leftDir;
+
       var torquePower = (power/maxPower)*topSpin;
 
-      torque.mult(torquePower, torque);
+      var cannonTorque = new CANNON.Vec3(
+        torque.x*torquePower,
+        torque.y*torquePower,
+        torque.z*torquePower
+      );
 
+      // entity.body.torque.vadd(
+      //   /* torque */                            cannonTorque,
+      //   /* weird requirement for pointer here*/ entity.body.torque
+      // );
       entity.body.torque.set(
-          torque.x,
-          torque.y,
-          torque.z
-      )
+        cannonTorque.x,
+        cannonTorque.y,
+        cannonTorque.z
+      );
       //Important for reducing physics system overehad.. I *think* this is turned off when "stuck", which is kind of a problem
       /*
         Note: fixing "sleepy" probelm w/ stuck objects:
