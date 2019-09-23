@@ -140,15 +140,16 @@ AFRAME.registerComponent('shooter', {
     //console.log("body: ");
       if( (typeof(entity.body) !== 'undefined' && entity.body.isLoaded == true) || entity.is('shot')) {
         //console.log("body already exists, fire");
-        entity.play()
+        //entity.play()
         launch();
       } else {
         //console.log("loading new physics body: ");
         entity.addState('shot');
-        entity.play()
+        //entity.play()
         //launch()
         entity.addEventListener('body-loaded', launch);
       }
+      entity.play()
 
     function launch() {
       var dir = new THREE.Vector3();
