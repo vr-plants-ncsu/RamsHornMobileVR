@@ -138,7 +138,7 @@ AFRAME.registerComponent('shooter', {
     //entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
     var body = entity.getAttribute('body');
     console.log("body: ");
-      if(entity.body.isLoaded == true || entity.is('shot')) {
+      if( (typeof(entity.body) !== 'undefined' && entity.body.isLoaded == true) || entity.is('shot')) {
         console.log("body already exists, fire");
         entity.play()
         launch();
