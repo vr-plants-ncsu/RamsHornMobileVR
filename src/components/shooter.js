@@ -166,24 +166,42 @@ AFRAME.registerComponent('shooter', {
 
       entity.body.velocity = new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/1.5, dir.z*(-1*power));
       //console.log("Shot Velocity: " + entity.body.velocity);
-      var torque = leftDir;
+      // var torque = leftDir;
+
+      var torque = new CANNON.Vec3(
+        leftDir.x,
+        leftDir.y,
+        leftDir.z
+      );
 
       var torquePower = (power/maxPower)*topSpin;
 
-      var cannonTorque = new CANNON.Vec3(
-        torque.x*torquePower,
-        torque.y*torquePower,
-        torque.z*torquePower
-      );
+      // var cannonTorque = new CANNON.Vec3(
+      //   torque.x*torquePower,
+      //   torque.y*torquePower,
+      //   torque.z*torquePower
+      // );
+
+      torque.mult(torquePower, torque);
 
       // entity.body.torque.vadd(
       //   /* torque */                            cannonTorque,
       //   /* weird requirement for pointer here*/ entity.body.torque
       // );
+      // entity.body.torque.set(
+      //   cannonTorque.x,
+      //   cannonTorque.y,
+      //   cannonTorque.z
+      // );
+      entity.body.angularVelocity.set(
+        0,
+        0,
+        0
+      );
       entity.body.torque.set(
-        cannonTorque.x,
-        cannonTorque.y,
-        cannonTorque.z
+        torque.x,
+        torque.y,
+        torque.z
       );
       //Important for reducing physics system overehad.. I *think* this is turned off when "stuck", which is kind of a problem
       /*
