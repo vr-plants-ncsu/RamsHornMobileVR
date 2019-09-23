@@ -156,7 +156,7 @@ AFRAME.registerComponent('sticky', {
     //hitEl.setAttribute('sleepy', 'allowSleep: false; linearDamping: 0.0; angularDamping: 0.1');
     hitEl.setAttribute("id", this.nextKey);
     this.stuckEls[this.nextKey] = hitEl;
-    console.log(this);
+    //console.log(this);
     //this.el.emit('unstick', {el: hitEl});
     this.nextKey++;
     this.stuckNum++;
@@ -167,7 +167,7 @@ AFRAME.registerComponent('sticky', {
     constraints = this.constraints;
     if(stuckEl) {
       var key = stuckEl.id;
-      console.log('removing ' + key + "!");
+      //console.log('removing ' + key + "!");
       if(this.constraints[key]) {
         this.system.removeConstraint(this.constraints[key]);
         delete constraints[key];
@@ -209,7 +209,7 @@ AFRAME.registerComponent('sticky', {
     var el = this.el;
     this.stuckEls.forEach(function(element) {
       el.emit('unstick', {el: element});
-      console.log("*****");
+      //console.log("*****");
     });
   },
 

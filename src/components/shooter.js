@@ -137,13 +137,13 @@ AFRAME.registerComponent('shooter', {
     //entity.setAttribute('mixin', this.data.mixin);
     //entity.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
     var body = entity.getAttribute('body');
-    console.log("body: ");
+    //console.log("body: ");
       if( (typeof(entity.body) !== 'undefined' && entity.body.isLoaded == true) || entity.is('shot')) {
-        console.log("body already exists, fire");
+        //console.log("body already exists, fire");
         entity.play()
         launch();
       } else {
-        console.log("loading new physics body: ");
+        //console.log("loading new physics body: ");
         entity.addState('shot');
         entity.play()
         //launch()
@@ -165,7 +165,7 @@ AFRAME.registerComponent('shooter', {
       leftDir.normalize();
 
       entity.body.velocity = new CANNON.Vec3(dir.x*(-1*power), dir.y*(-1*power) + power/1.5, dir.z*(-1*power));
-      console.log("Shot Velocity: " + entity.body.velocity);
+      //console.log("Shot Velocity: " + entity.body.velocity);
       var torque = leftDir;
 
       var torquePower = (power/maxPower)*topSpin;

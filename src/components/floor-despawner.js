@@ -14,7 +14,7 @@ AFRAME.registerComponent('floor-despawner', {
     this.onHit = this.onHit.bind(this);
     this.default_delay = this.data.default_delay;
     this.poolName = 'pool__' + this.data.pooled_objects;
-    console.log('floor despawner active');
+    //console.log('floor despawner active');
   },
 
   play: function() {
@@ -55,16 +55,16 @@ AFRAME.registerComponent('floor-despawner', {
   },
 
   onHit: function(evt) {
-    console.log("Floor hit!");
+    //console.log("Floor hit!");
     hitEl = evt.detail.body.el;
     //if(this.data.objects && this.data.objects == hitEl.getAttribute('class')) return;
     if(!hitEl.is(this.DESPAWNING_STATE)) {
       var timestamp = this.el.sceneEl.time;
       hitEl.addState(this.DESPAWNING_STATE);
-      console.log(hitEl + " added to despawn queue!");
+      //console.log(hitEl + " added to despawn queue!");
       this.entityTimestampPairs.push({ element: hitEl, timestamp: timestamp});
     }
-    console.log(this.entityTimestampPairs);
+    //console.log(this.entityTimestampPairs);
   },
 
 });
