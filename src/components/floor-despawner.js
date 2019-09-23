@@ -41,9 +41,10 @@ AFRAME.registerComponent('floor-despawner', {
       }
     });
     entityTimestampPairs = this.entityTimestampPairs;
-    if(typeof(entityTimestampPairs) === 'undefined') return;
+    //if(typeof(entityTimestampPairs) === 'undefined') return;
     indexesToSplice.forEach(function(i) {
       splicedPair = entityTimestampPairs.splice(i, 1)[0];
+      if(typeof(splicedPair) === 'undefined') return;
       splicedPair.element.removeState(DESPAWNING_STATE);
       if(splicedPair.element.is('stuck')) return;
       if(splicedPair.element.is('unstuck')) splicedPair.element.removeState('unstuck');
