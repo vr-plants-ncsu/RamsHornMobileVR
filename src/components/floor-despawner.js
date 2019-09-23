@@ -28,11 +28,11 @@ AFRAME.registerComponent('floor-despawner', {
   },
 
   tick: function() {
+    var entityTimestampPairs = this.entityTimestampPairs;
     indexesToSplice = []
     currentTime = this.el.sceneEl.time;
     var el = this.el;
     var poolName = this.poolName;
-    var entityTimestampPairs = this.entityTimestampPairs;
     var default_delay = this.default_delay;
     var DESPAWNING_STATE = this.DESPAWNING_STATE;
     this.entityTimestampPairs.forEach(function(etp, index) {
@@ -41,6 +41,7 @@ AFRAME.registerComponent('floor-despawner', {
       }
     });
     entityTimestampPairs = this.entityTimestampPairs;
+    if(typeof(entityTimestampPairs) === 'undefined') return;
     indexesToSplice.forEach(function(i) {
       splicedPair = entityTimestampPairs.splice(i, 1)[0];
       splicedPair.element.removeState(DESPAWNING_STATE);
