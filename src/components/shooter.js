@@ -194,15 +194,15 @@ AFRAME.registerComponent('shooter', {
       //   cannonTorque.z
       // );
       entity.body.angularVelocity.set(
-        0,
-        0,
-        0
-      );
-      entity.body.torque.set(
         torque.x,
         torque.y,
         torque.z
       );
+      // entity.body.torque.set(
+      //   torque.x,
+      //   torque.y,
+      //   torque.z
+      // );
       //Important for reducing physics system overehad.. I *think* this is turned off when "stuck", which is kind of a problem
       /*
         Note: fixing "sleepy" probelm w/ stuck objects:
