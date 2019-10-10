@@ -156,68 +156,6 @@
         <!-- poof -->
         <a-mixin id="poof" geometry="primitive: plane; height: 1.5; width: 1.5; rotation: -90 0 0" material="shader: gif; src: #star-poof; transparent: true;"></a-mixin>
         <!-- Colliders -->
-        <a-mixin id="colliderShapesRam" body="type: static; shape: none; mass: 0.1; linearDamping: 0.1; angularDamping: 0.1"
-
-        shape__main="shape: sphere;
-                     radius: 0.17;
-                     offset: -0.145 0.136 0.165;"
-        shape__body1="shape: sphere;
-                      radius: 0.12;
-                      offset: -0.083 0.243 0.198;"
-        shape__body2="shape: sphere;
-                      radius: 0.12;
-                      offset: -0.173 0.029 0.118;"
-
-        shape__bodyTop="shape: box;
-                        halfExtents: 0.084 0.103 0.105;
-                        offset: -0.157 -0.098 0.038;
-                        orientation: 0.8400684, 0.2886184, 0.0301367, 0.4583408 ;"
-        shape__leftArm="shape: box;
-                        halfExtents: 0.137 0.0445 0.0325;
-                        offset: 0.005 -0.244 0.06;
-                        orientation: 0.1290826 0.0039395 -0.1003681 0.9865335;"
-        shape__leftArm1="shape: box;
-                         halfExtents: 0.13 0.041 0.0305;
-                         offset: 0.249 -0.271 0.017;
-                         orientation: 0.0501092 0.1840173 0.0409406 0.9807908;"
-        shape__leftArm2="shape: box;
-                         halfExtents: 0.09 0.0365 0.02;
-                         offset: 0.417 -0.197 -0.078w;
-                         orientation: 0.0707054 0.3141996 0.3492167 0.8799586;"
-        shape__leftArm3="shape: box;
-                         halfExtents: 0.0485 0.0305 0.02;
-                         offset: 0.482 -0.107 -0.142;
-                         orientation: 0.09046 0.3303264 0.4447484 0.8275871;"
-        shape__leftArm4="shape: box;
-                         halfExtents: 0.091 0.0285 0.013;
-                         offset: 0.487 0.007 -0.18;
-                         orientation: 0.0135517 0.1734546 0.8368887 0.5189867;"
-        shape__rightArm="shape: box;
-                         halfExtents: 0.026 0.044 0.1045;
-                         offset: -0.171 -0.098 -0.15;
-                         orientation: 0.123475, -0.1116069, -0.3571837, 0.9190852;"
-        shape__rightArm1="shape: box;
-                          halfExtents: 0.12 0.0245 0.0355;
-                          offset: -0.073 -0.048 -0.325;
-                          orientation: -0.0936292 0.333684 0.2393541 0.906972;"
-        shape__rightArm2="shape: box;
-                          halfExtents: 0.1065 0.032 0.0205;
-                          offset: 0.092 0.02 -0.43;
-                          orientation: 0.7413147 0.192885, 0.002603 0.6428382;"
-        shape__rightArm3="shape: box;
-                          halfExtents: 0.0865 0.025 0.0145;
-                          offset: 0.263 0.07 -0.436;
-                          orientation: 0.7100493 -0.0113422 0.1822565 0.6800617;"
-        shape__rightArm4="shape: box;
-                          halfExtents: 0.0455 0.0165 0.0145;
-                          offset: 0.371 0.101 -0.386;
-                          orientation: 0.7033997 -0.186609 0.3871981 0.5661126;"
-        shape__rightArm5="shape: box;
-                          halfExtents: 0.0515 0.022 0.01;
-                          offset: 0.407 0.11 -0.31;
-                          orientation: -0.6250864 0.3855834 -0.5259696 -0.4288922;"></a-mixin>
-
-        <a-mixin id="boxclone" geometry="primitive: box" material="color: red" body="type:dynamic; mass: 0.1; linearDamping: 0.1; angularDamping: 0.1" class="grabbable"></a-mixin>
         <a-mixin id="ramsclone" gltf-model="#rams-horn" body="type: dynamic; shape: none; mass: 0.1; linearDamping: 0.1; angularDamping: 0.1"
         shape__main="shape: sphere;
                      radius: 0.17;
@@ -277,68 +215,6 @@
                           halfExtents: 0.0515 0.022 0.01;
                           offset: 0.407 0.11 -0.31;
                           orientation: -0.6250864 0.3855834 -0.5259696 -0.4288922;" class="grabbable" shadow="receive: false"></a-mixin>
-
-        <a-mixin id="ramsclone2" gltf-model="#rams-horn" body="type: dynamic; mass: 0.1; linearDamping: 0.1; angularDamping: 0.1" class="grabbable"></a-mixin>
-
-        <a-mixin id="spawnerShapesRam" body="type: dynamic; shape: none; mass: 0;" collision-filter="collisionForces: false"
-        shape__main="shape: sphere;
-                     radius: 0.17;
-                     offset: -0.145 0.136 0.165;"
-        shape__body1="shape: sphere;
-                      radius: 0.12;
-                      offset: -0.083 0.243 0.198;"
-        shape__body2="shape: sphere;
-                      radius: 0.12;
-                      offset: -0.173 0.029 0.118;"
-
-        shape__bodyTop="shape: box;
-                        halfExtents: 0.084 0.103 0.105;
-                        offset: -0.157 -0.098 0.038;
-                        orientation: 0.8400684, 0.2886184, 0.0301367, 0.4583408 ;"
-        shape__leftArm="shape: box;
-                        halfExtents: 0.137 0.0445 0.0325;
-                        offset: 0.005 -0.244 0.06;
-                        orientation: 0.1290826 0.0039395 -0.1003681 0.9865335;"
-        shape__leftArm1="shape: box;
-                         halfExtents: 0.13 0.041 0.0305;
-                         offset: 0.249 -0.271 0.017;
-                         orientation: 0.0501092 0.1840173 0.0409406 0.9807908;"
-        shape__leftArm2="shape: box;
-                         halfExtents: 0.09 0.0365 0.02;
-                         offset: 0.417 -0.197 -0.078w;
-                         orientation: 0.0707054 0.3141996 0.3492167 0.8799586;"
-        shape__leftArm3="shape: box;
-                         halfExtents: 0.0485 0.0305 0.02;
-                         offset: 0.482 -0.107 -0.142;
-                         orientation: 0.09046 0.3303264 0.4447484 0.8275871;"
-        shape__leftArm4="shape: box;
-                         halfExtents: 0.091 0.0285 0.013;
-                         offset: 0.487 0.007 -0.18;
-                         orientation: 0.0135517 0.1734546 0.8368887 0.5189867;"
-        shape__rightArm="shape: box;
-                         halfExtents: 0.026 0.044 0.1045;
-                         offset: -0.171 -0.098 -0.15;
-                         orientation: 0.123475, -0.1116069, -0.3571837, 0.9190852;"
-        shape__rightArm1="shape: box;
-                          halfExtents: 0.12 0.0245 0.0355;
-                          offset: -0.073 -0.048 -0.325;
-                          orientation: -0.0936292 0.333684 0.2393541 0.906972;"
-        shape__rightArm2="shape: box;
-                          halfExtents: 0.1065 0.032 0.0205;
-                          offset: 0.092 0.02 -0.43;
-                          orientation: 0.7413147 0.192885, 0.002603 0.6428382;"
-        shape__rightArm3="shape: box;
-                          halfExtents: 0.0865 0.025 0.0145;
-                          offset: 0.263 0.07 -0.436;
-                          orientation: 0.7100493 -0.0113422 0.1822565 0.6800617;"
-        shape__rightArm4="shape: box;
-                          halfExtents: 0.0455 0.0165 0.0145;
-                          offset: 0.371 0.101 -0.386;
-                          orientation: 0.7033997 -0.186609 0.3871981 0.5661126;"
-        shape__rightArm5="shape: box;
-                          halfExtents: 0.0515 0.022 0.01;
-                          offset: 0.407 0.11 -0.31;
-                          orientation: -0.6250864 0.3855834 -0.5259696 -0.4288922;"></a-mixin>
 
         <!-- Bison Sticky Collider -->
         <a-mixin id="colliderShapesBison" body="type: static; shape: none;"
