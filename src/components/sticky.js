@@ -162,6 +162,13 @@ AFRAME.registerComponent('sticky', {
     this.stuckNum++;
   },
 
+  // onStick: function(evt) {
+  //   const hitEl = evt.detail.el;
+  //   var el = this.el;
+  //   //hitEl.object3D.parent = el.object3D;
+  //   hitEl.body.type = "static"
+  // },
+
   onUnstick: function(evt) {
     const stuckEl = evt.detail.el;
     constraints = this.constraints;
