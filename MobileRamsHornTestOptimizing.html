@@ -142,6 +142,9 @@
         <!-- Grass -->
         <a-asset-item id="grass-glb" src="./assets/Poly Models/grass.glb" crossorigin="anonymous"></a-asset-item>
 
+        <!-- full scene model -->
+        <a-asset-item id="desert-scene-glb" src="./assets/desert_scene.glb" crossorigin="anonymous"></a-asset-item>
+
         <!-- Wind --
         <audio id="wind" src="./assets/RamsWind.mp3" preload="auto" autoplay="true" loop="true" crossorigin="anonymous"></audio>
 
@@ -155,6 +158,8 @@
 
         <!-- poof -->
         <a-mixin id="poof" geometry="primitive: plane; height: 1.5; width: 1.5; rotation: -90 0 0" material="shader: gif; src: #star-poof; transparent: true;"></a-mixin>
+
+
         <!-- Colliders -->
         <a-mixin id="ramsclone" gltf-model="#rams-horn" body="type: dynamic; shape: none; mass: 0.1; linearDamping: 0.1; angularDamping: 0.1"
         shape__main="shape: sphere;
@@ -329,10 +334,11 @@
 
        <a-entity id="bison3" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="10 2 -12" rotation="0.0 165 0.0" scale=".75 .75 .75" sticky="objects: .grabbable" shadow="receive: false" visible="false">
          <!--<a-entity id="bison-sunnies" gltf-model="#sunnies-gltf" position="-2.966 1.626 0.021" rotation="180 90 180" scale="0.032 0.032 0.032" ></a-entity> -->
-       -</a-entity>
+       </a-entity>
 
+       <a-entity id="desert-scene" gltf-model="#desert-scene-glb" shadow></a-entity>
        <!-- Merged Scenery Geometry -->
-       <a-entity>
+       <a-entity visible="false">
          <!-- Rocks -->
          <a-entity geometry-merger="preserveOriginal: false" id="rocks" position="0 0 0">
            <a-entity id="rocks 1" gltf-model="#rocks-glb" position="12 0 34.06767" scale="1 1 1" rotation="2.790304462287109 -81.16405534264216 1.665588310445303" shadow="receive: false">
