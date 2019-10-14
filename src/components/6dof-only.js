@@ -12,8 +12,10 @@ AFRAME.registerComponent('6dof-only', {
     var el = this.el;
     if(!el.sceneEl.isMobile) {
       el.visible = true;
+      el.play();
     } else {
       el.visible = false;
+      el.pause();
     }
   },
 });

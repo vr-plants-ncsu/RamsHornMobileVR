@@ -5,7 +5,8 @@ AFRAME.registerComponent('spawner', {
     depth: {type: 'number', default: 1},
     offset: {type: 'vec3', default: {x: 0, y: 0, z: 0}},
     rotation: {type: 'vec3', default: {x: 0, y: 0, z: 0}},
-    mixin: {default: ''}
+    mixin: {default: ''},
+    class: {default: 'grabbable'}
   },
 
   init: function() {
@@ -44,25 +45,36 @@ AFRAME.registerComponent('spawner', {
       console.log("Holding something!")
     }
 
-    console.log(hitEl.components.grab);
+    //console.log(hitEl.components.grab);
     //if(hitEl.grabbing) {
     //  this.spawn();
     //}
-    console.log(evt.detail.body.el.id);
+    //console.log(evt.detail.body.el.id);
   },
 
   spawn: function() {
     var el = this.el;
-    var entity = document.createElement('a-entity');
+    var poolName = 'pool__' + this.data.mixin;
+    //var entity = document.createElement('a-entity');
+    //here we assume mixin is pooled:
+
+    var entity = el.sceneEl.components[poolName].requestentity();
+    entity.setAttribute('class', this.data.class);
     var matrixWorld = el.object3D.matrixWorld;
     var position = new THREE.Vector3();
-    var rotation = el.getAttribute('rotation');
+    //var rotation = el.getAttribute('rotation');
+    var rotation = new THREE.Quaternion();
     var entityRotation;
 
     position.setFromMatrixPosition(matrixWorld);
-    entity.setAttribute('position', position);
+    matrixWorld.getWorldQuaternion(rotation);
 
-    entity.setAttribute('mixin', this.data.mixin);
+    //optimized below - actually should be further optimized!
+    //entity.setAttribute('position', position);
+    entity.object3D.position.copy(position);
+    entity.object3D.quaternion.copy(rotation);
+
+    //entity.setAttribute('mixin', this.data.mixin);
     entity.addEventListener('loaded', function() {
       entityRotation = entity.getAttribute('rotation');
       entity.setAttribute('rotation', {
