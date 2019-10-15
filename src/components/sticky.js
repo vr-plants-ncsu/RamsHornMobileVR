@@ -109,6 +109,7 @@ AFRAME.registerComponent('sticky', {
     // console.log("stuck state?: " + stuckState);
     //Check list of els if objects is defined
     if(!this.sticky) return;
+    if(hitEl.is(this.STUCK_STATE)) return;
     if(this.data.objects) {
       //this.els.forEach(checkStickable);
       var hitElClass = hitEl.getAttribute('class');
