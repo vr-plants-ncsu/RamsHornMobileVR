@@ -68,7 +68,7 @@
   </head>
   <body>
     <!-- unlock web audio context -->
-    <script>
+  <!--  <script>
 
       window.addEventListener('touchstart', function() {
 
@@ -85,7 +85,7 @@
 
       }, false);
 
-    </script>
+    </script>-->
 
     <a-scene id="scene"
              physics="debug: false"
@@ -94,13 +94,12 @@
              renderer="colorManagement: true;
                        highRefreshRate: true;"
              shadow="autoUpdate: true; type: pcfsoft"
-             pool__boxclone="mixin: boxclone; size: 12; dynamic: true"
              pool__ramsclone="mixin: ramsclone; size: 12; dynamic: true">
       <a-assets>
 
         <!-- Sky Stuff & NCSU logo -->
         <img id="sky" src="./assets/arizona_sky.jpg" crossorigin="anonymous">
-        <img id="pipe" src="./assets/bottomless_pit.jpg" crossorigin="anonymous">
+        <!--<img id="pipe" src="./assets/bottomless_pit.jpg" crossorigin="anonymous">-->
         <img id="cliffs" src="./assets/Rocks and sand.png" crossorigin="anonymous">
         <img id="NCSULogo" src="./assets/brick4x1.jpg" crossorigin="anonymous">
         <img id="basin" src="./assets/basin.jpg" crossorigin="anonymous">
@@ -328,9 +327,9 @@
            -->
        </a-entity>
 
-       <!--<a-entity id="bison" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="8 2 -8" rotation="0.0 60.849 0.0" scale="1 1 1" sticky="objects: .grabbable" shadow="receive: false" visible="true"> -->
-       <a-entity id="bison" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="8 2 -8" rotation="0.0 60.849 0.0" scale="1 1 1" sticky="objects: .grabbable" back-and-forth="speed: 1; direction: 1 0 0; distance: 6" shadow="receive: false" visible="false">
-         <!--<a-entity id="bison-sunnies" gltf-model="#sunnies-gltf" position="-2.966 1.626 0.021" rotation="180 90 180" scale="0.032 0.032 0.032" ></a-entity> -->
+       <a-entity id="bison" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="8 2 -8" rotation="0.0 60.849 0.0" scale="1 1 1" sticky="objects: .grabbable" shadow="receive: false" visible="false">
+       <!-- <a-entity id="bison" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="8 2 -8" rotation="0.0 60.849 0.0" scale="1 1 1" sticky="objects: .grabbable" back-and-forth="speed: 1; direction: 1 0 0; distance: 6" shadow="receive: false" visible="false">
+         <!--<a-entity id="bison-sunnies" gltf-model="#sunnies-gltf" position="-2.966 1.626 0.021" rotation="180 90 180" scale="0.032 0.032 0.032" ></a-entity> --> -->
        </a-entity>
 
        <a-entity id="bison3" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="10 2 -12" rotation="0.0 165 0.0" scale=".75 .75 .75" sticky="objects: .grabbable" shadow="receive: false" visible="false">
@@ -341,7 +340,7 @@
        <!-- Merged Scenery Geometry -->
        <a-entity visible="false">
          <!-- Rocks -->
-         <a-entity geometry-merger="preserveOriginal: false" id="rocks" position="0 0 0">
+         <a-entity id="rocks" position="0 0 0">
            <a-entity id="rocks 1" gltf-model="#rocks-glb" position="12 0 34.06767" scale="1 1 1" rotation="2.790304462287109 -81.16405534264216 1.665588310445303" shadow="receive: false">
            </a-entity>
            <a-entity id="rocks-2" gltf-model="#rocks-glb" position="12 0 -8" scale="1 1 1" shadow>
@@ -353,7 +352,7 @@
          </a-entity>
 
          <!-- More Rocks -->
-         <a-entity geometry-merger="preserveOriginal: false" id="rocks_also" position="0 0 0" rotation="0 180 0">
+         <a-entity id="rocks_also" position="0 0 0" rotation="0 180 0">
            <a-entity id="rocks 1" gltf-model="#rocks-glb" position="12 0 34.06767" scale="1 1 1" rotation="2.790304462287109 -81.16405534264216 1.665588310445303" shadow="receive: false">
            </a-entity>
            <a-entity id="rocks-2" gltf-model="#rocks-glb" position="12 0 -8" scale="1 1 1" shadow="receive: false">
