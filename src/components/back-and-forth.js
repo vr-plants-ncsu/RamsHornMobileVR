@@ -9,6 +9,8 @@ AFRAME.registerComponent('back-and-forth', {
   init: function() {
     var distance = this.distance;
 
+    this.tick = AFRAME.utils.throttleTick(this.tick, 10, this);
+
     //make sure speed is stored as a positive value
     if(this.data.speed < 0)
       this.data.speed = this.data.speed * -1;
@@ -106,7 +108,7 @@ AFRAME.registerComponent('back-and-forth', {
     */
   },
 
-  tick: function() {
+  tick: function(t, dt) {
 
     distance = this.data.distance;
     location = this.location;
