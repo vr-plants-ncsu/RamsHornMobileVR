@@ -43,8 +43,8 @@ AFRAME.registerComponent('sticky', {
     this.onStick = this.onStick.bind(this);
     this.onUnstick = this.onUnstick.bind(this);
     this.unstickAll = this.unstickAll.bind(this);
-    this.turnOnSticky = this.turnOnSticky.bind(this);
-    this.turnOffSticky = this.turnOffSticky.bind(this);
+    //this.turnOnSticky = this.turnOnSticky.bind(this);
+    //this.turnOffSticky = this.turnOffSticky.bind(this);
   },
 
   play: function() {
@@ -53,12 +53,12 @@ AFRAME.registerComponent('sticky', {
     el.addEventListener('stick', this.onStick);
     el.addEventListener('unstick', this.onUnstick);
     el.addEventListener('unstick-all', this.unstickAll);
-    if(this.sticky) {
-      el.addEventListener('sticky-off', this.turnOffSticky);
+    //if(this.sticky) {
+      //el.addEventListener('sticky-off', this.turnOffSticky);
 
-    } else {
-      el.addEventListener('sticky-on', this.turnOnSticky);
-    }
+    //} else {
+    //  el.addEventListener('sticky-on', this.turnOnSticky);
+    //}
     //el.addEventListener('makeSound', this.makeSound);
   },
 
@@ -68,8 +68,8 @@ AFRAME.registerComponent('sticky', {
     el.removeEventListener('stick', this.onStick);
     el.removeEventListener('unstick', this.onUnstick);
     el.removeEventListener('unstick-all', this.unstickAll);
-    el.removeEventListener('sticky-off', this.turnOffSticky);
-    el.removeEventListener('sticky-on', this.turnOnSticky);
+    //el.removeEventListener('sticky-off', this.turnOffSticky);
+    //el.removeEventListener('sticky-on', this.turnOnSticky);
     //el.removeEventListener('makeSound', this.makeSound);
   },
 

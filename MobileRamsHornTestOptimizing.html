@@ -328,12 +328,12 @@
            -->
        </a-entity>
 
-       <a-entity id="bison" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="8 2 -8" rotation="0.0 60.849 0.0" scale="1 1 1" sticky="objects: .grabbable" shadow="receive: false" visible="true">
-       <!--<a-entity id="bison" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="8 2 -8" rotation="0.0 60.849 0.0" scale="1 1 1" sticky="objects: .grabbable" back-and-forth="speed: 1; direction: 1 0 0; distance: 6" shadow="receive: false" visible="true">
+       <!--<a-entity id="bison" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="8 2 -8" rotation="0.0 60.849 0.0" scale="1 1 1" sticky="objects: .grabbable" shadow="receive: false" visible="true"> -->
+       <a-entity id="bison" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="8 2 -8" rotation="0.0 60.849 0.0" scale="1 1 1" sticky="objects: .grabbable" back-and-forth="speed: 1; direction: 1 0 0; distance: 6" shadow="receive: false" visible="false">
          <!--<a-entity id="bison-sunnies" gltf-model="#sunnies-gltf" position="-2.966 1.626 0.021" rotation="180 90 180" scale="0.032 0.032 0.032" ></a-entity> -->
        </a-entity>
 
-       <a-entity id="bison3" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="10 2 -12" rotation="0.0 165 0.0" scale=".75 .75 .75" sticky="objects: .grabbable" shadow="receive: false" visible="true">
+       <a-entity id="bison3" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="10 2 -12" rotation="0.0 165 0.0" scale=".75 .75 .75" sticky="objects: .grabbable" shadow="receive: false" visible="false">
          <!--<a-entity id="bison-sunnies" gltf-model="#sunnies-gltf" position="-2.966 1.626 0.021" rotation="180 90 180" scale="0.032 0.032 0.032" ></a-entity> -->
        </a-entity>
 
@@ -410,11 +410,12 @@
          <!-- Boombox --
          <a-entity id="wind" sound="src: #wind; on: click; autoplay: true; loop: true" position="-0.463 3.0 -5.464"></a-entity> -->
          <a-entity id="boombox" gltf-model="#boombox-gltf" body="type: static" sound="src: #music; on: click; autoplay: true; loop: true" position="0.297 2.0 -8.246" scale="0.494 0.494 0.494" rotation="0 -35 0" shadow="receive: false"></a-entity>
-         <!-- flower test-->
-         <a-entity id="flower" mixin="pl-flower" position="-.598 2.5 -8.793" rotation="0 -15 0" scale="-1 1 1" visible="false"></a-entity>
-         <a-entity id="flower" mixin="pl-flower" position="1.412 2.479 -4.649" rotation="0 -121.99 0" visible="false"></a-entity>
+
 
       </a-entity>
+      <!-- flower test-->
+      <a-entity id="flower" mixin="pl-flower" position="-.598 2.5 -8.793" rotation="0 -15 0" scale="-1 1 1" visible="true"></a-entity>
+      <a-entity id="flower" mixin="pl-flower" position="1.412 2.479 -4.649" rotation="0 -121.99 0" visible="true"></a-entity>
 
        <!--<a-entity id="poof" mixin="poof" position="-2.819 2.729 -0.483" rotation="0 168.71"></a-entity>
        <!-- Testing for player area (not moving) -->

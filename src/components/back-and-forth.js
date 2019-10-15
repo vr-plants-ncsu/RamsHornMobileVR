@@ -145,7 +145,7 @@ AFRAME.registerComponent('back-and-forth', {
     // console.log(this.el.object3D.position);
     // this.distanceTravled += velocity.length();
 
-    this.elobject.position.add(
+    this.el.object3D.position.add(
       new THREE.Vector3(
         Math.sin(this.el.sceneEl.time),
         0,
