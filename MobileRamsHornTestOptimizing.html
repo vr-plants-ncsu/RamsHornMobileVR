@@ -320,7 +320,7 @@
                      <a-entity id="shooter"
                                position="0 -0.6 -1"
                                rotation="0 0 0"
-                               shooter="mixin: ramsclone; spawnMagnitude: 10.0; top_spin: 18.0">
+                               shooter="mixin: ramsclone; spawnMagnitude: 10.0; top_spin: 20.0">
                      </a-entity>
            </a-entity>
 
@@ -335,17 +335,17 @@
        <!-- </a-entity> -->
 
        <a-entity id="bison" position="6 3.7 -5" rotation="0.0 85 0.0" back-and-forth="speed: 1; direction: 1 0 0; distance: 6" shadow>
-        <a-box scale="3 3 0.6" body="type: static; shape: none;" shape__main="shape: box" sticky="objects: .grabbable" visible="false"></a-box>
-        <a-plane id="sign" material="src: #bison_png; transparent: true" rotation="0 180 0" position="0 0 -0.52" scale="4.5 4.5 4.5" ></a-plane>
-        <a-plane id="sign" material="src: #bison_png; transparent: true" rotation="0 0 0" position="0 0 0.52" scale="-4.5 4.5 4.5" ></a-plane>
+        <a-box scale="3 3 0.48" body="type: static; shape: none;" shape__main="shape: box" sticky="objects: .grabbable" visible="false"></a-box>
+        <a-plane id="sign" material="src: #bison_png; transparent: true" rotation="0 180 0" position="0 0 -0.35" scale="4.5 4.5 4.5" ></a-plane>
+        <a-plane id="sign" material="src: #bison_png; transparent: true" rotation="0 0 0" position="0 0 0.35" scale="-4.5 4.5 4.5" ></a-plane>
        </a-entity>
 
        <!-- <a-entity id="bison3" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="10 2 -12" rotation="0.0 165 0.0" scale=".75 .75 .75" sticky="objects: .grabbable" shadow="receive: false" visible="false">
          <!--<a-entity id="bison-sunnies" gltf-model="#sunnies-gltf" position="-2.966 1.626 0.021" rotation="180 90 180" scale="0.032 0.032 0.032" ></a-entity> -->
        <!-- </a-entity> -->
-       <a-entity id="bison3" geometry="primitive: box;" body="type: static; shape: none;" shape__main="shape: box" position="10 3.5 -12" rotation="0.0 105 0.0" scale="2.5 2.5 0.5" sticky="objects: .grabbable" shadow visible="true">
-         <a-plane id="sign" material="src: #bison_png; transparent: true" rotation="0 180 0" position="0 0 -0.52" scale="1.5 1.5 1.5" ></a-plane>
-         <a-plane id="sign" material="src: #bison_png; transparent: true" rotation="0 0 0" position="0 0 0.52" scale="-1.5 1.5 1.5" ></a-plane>
+       <a-entity id="bison3" geometry="primitive: box;" body="type: static; shape: none;" shape__main="shape: box" position="10 3.5 -12" rotation="0.0 105 0.0" scale="2.5 2.5 0.4" sticky="objects: .grabbable" shadow visible="true">
+         <a-plane id="sign" material="src: #bison_png; transparent: true" rotation="0 180 0" position="0 0 -0.35" scale="1.5 1.5 1.5" ></a-plane>
+         <a-plane id="sign" material="src: #bison_png; transparent: true" rotation="0 0 0" position="0 0 0.35" scale="-1.5 1.5 1.5" ></a-plane>
        </a-entity>
 
        <a-entity id="desert-scene" gltf-model="#desert-scene-glb" shadow="cast: true; receive: false"></a-entity>
