@@ -14,7 +14,7 @@ AFRAME.registerComponent('6dof-only', {
 
     function handleSceneLoaded (event) {
       console.log(this);
-      if(!el.sceneEl.isMobile) {
+      if(!el.sceneEl.isMobile && el.sceneEl.is('vr-mode')) {
         this.el.object3D.visible = true;
         this.el.play();
         el.sceneEl.addEventListener('enter-vr', handleEnterVR);
