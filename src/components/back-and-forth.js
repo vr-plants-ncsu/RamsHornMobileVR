@@ -7,85 +7,20 @@ AFRAME.registerComponent('back-and-forth', {
   },
 
   init: function() {
-    var distance = this.distance;
-
     this.tick = AFRAME.utils.throttleTick(this.tick, 10, this);
-
-    //make sure speed is stored as a positive value
-    if(this.data.speed < 0)
-      this.data.speed = this.data.speed * -1;
-
-    //used to determine second endpoint
     this.direction = new THREE.Vector3(
-                  this.data.direction.x,
-                  this.data.direction.y,
-                  this.data.direction.z
-                );
-    this.direction.normalize();
-
-    var temp = new THREE.Vector3(
-      this.el.object3D.position.x,
-      this.el.object3D.position.y,
-      this.el.object3D.position.z
+      this.data.direction.x,
+      this.data.direction.y,
+      this.data.direction.z
     );
+    this.speed = this.data.speed;
+    this.distance = this.data.distance;
 
-    //first endpoint stored as a THREE.Vector3 object
-    this.origin = new THREE.Vector3(
-                    temp.x,
-                    temp.y,
-                    temp.z
-                  );
-    //second endpoint stored as a THREE.Vector3 object
-    this.destination = new THREE.Vector3(
-                        temp.x,
-                        temp.y,
-                        temp.z
-                      );
-    //current location along path stored as a THREE.Vector3 object
-    // this.location = new THREE.Vector3(
-    //                   origin.x,
-    //                   origin.y,
-    //                   origin.z
-    //                 );
-
-    this.distanceTraveled = 0;
-    //calculating correct position for second endpoint
-    temp.set(
-      this.direction.x*distance,
-      this.direction.y*distance,
-      this.direction.z*distance
-    );
-    this.destination.add(temp);
-
-    //easing should be a value between 0 and 1 (percentage)
-    if(this.data.easing > 1.0) this.data.easing = 1.0;
-    if(this.data.easing < 0.0) this.data.easing = 0.0;
-
-    //acceleration and maximum velocity should be negative if accelerating in negative direction
-    if(this.data.distance < 0) {
-      this.data.speed = this.data.speed * -1;
-    }
-
-    //calculate distance along path on which easing (accleration/deceleration occurs)
-    this.easingDistance = this.data.distance/2 * this.data.easing;
-
-    /*avoid dividing by zero; if easing distance is 0, accleration is stored as zero -
-      later step functions will understand 0 acceleration means to skip the acceleration
-      steps and move at maximum velocity throughout animation
-    */
-    this.acceleration = new THREE.Vector3(
-      this.direction.x,
-      this.direction.y,
-      this.direction.z
-    );
-    var speed = this.data.speed;
-    if(this.easingDistance != 0) {
-      this.acceleration.multiplyScalar(Math.sign(speed)*(speed*speed)/(2*this.easingDistance) );
-    } else {
-      this.acceleration.set(0, 0, 0);
-    }
-
-    this.velocity = new THREE.Vector3(0, 0, 0);
+    this.startingPosition = new THREE.Vector3;
+    this.startingPosition.copy(this.el.object3D.position);
+    this.nextPosition = new THREE.Vector3;
+    this.needsPositionReset = false;
+    this.tempOffset = new THREE.Vector3;
     //this.moveDir = "Forward";
 
     /*
@@ -108,15 +43,31 @@ AFRAME.registerComponent('back-and-forth', {
     */
   },
 
+  pause: function() {
+    this.needsPositionReset = true;
+    this.tempOffset.copy(this.el.object3D.position);
+    this.tempOffset.sub(this.startingPosition);
+  },
+
+  play: function() {
+    if(this.needsPositionReset) {
+      this.startingPosition.copy(this.el.object3D.position);
+      this.startingPosition.sub(this.tempOffset);
+    }
+    this.speed = this.data.speed;
+    this.distance = this.data.distance;
+    this.direction = new THREE.Vector3(
+      this.data.direction.x,
+      this.data.direction.y,
+      this.data.direction.z
+    );
+  },
+
   tick: function(t, dt) {
 
-    distance = this.data.distance;
-    location = this.location;
-    easingDistance = this.easingDistance;
-    acceleration = this.acceleration;
-    velocity = this.velocity;
-    distanceTraveled = this.distanceTraveled;
-    moveDir = this.moveDir;
+    //distance = this.data.distance;
+    //location = this.location;
+    //speed = this.data.speed;
 
     // if( (distance > 0 && distanceTraveled >= distance ) ||
     //     (distance < 0 && -distanceTraveled <= distance ) )
@@ -146,13 +97,15 @@ AFRAME.registerComponent('back-and-forth', {
     // this.el.object3D.position.add(velocity);
     // console.log(this.el.object3D.position);
     // this.distanceTravled += velocity.length();
-
-    this.el.object3D.position.add(
-      new THREE.Vector3(
-        Math.sin(this.el.sceneEl.time),
-        0,
-        0
-      )
+    this.nextPosition.copy(this.direction);
+    this.nextPosition.multiplyScalar(Math.sin(this.el.sceneEl.time/1000*this.speed)*this.distance);
+    this.nextPosition.add(this.startingPosition);
+    //this.direction.multiplyScalar(Math.sin(this.el.sceneEl.time));
+    this.el.object3D.position.set(
+      this.nextPosition.x,
+      this.nextPosition.y,
+      this.nextPosition.z
     );
+//console.log(this.direction);
   }
 });
