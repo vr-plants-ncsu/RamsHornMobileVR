@@ -15,6 +15,7 @@
      <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
      <script src="https://unpkg.com/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script>
      <script src="./src/components/sphere-collider-mod.js"></script>
+     <script src="./src/components/spawner.js"></script>
      <script src="./src/components/shooter.js"></script>
      <script src="./src/components/sticky.js"></script>
      <script src="./src/components/back-and-forth.js"></script>
@@ -293,6 +294,15 @@
            <a-entity id="leftHand" class="6dof-only" hand-controls="left" static-body="shape: sphere; sphereRadius: 0.02" sphere-collider-mod="objects: .grabbable, .mush; radius: 0.04" grab 6dof-only shadow></a-entity>
            <a-entity id="rightHand" class="6dof-only" hand-controls="right" static-body="shape: sphere; sphereRadius: 0.02" sphere-collider-mod="objects: .grabbable, .mush; radius: 0.04" grab 6dof-only shadow></a-entity>
 
+       </a-entity>
+
+       <a-entity id="spawner" dynamic-body="mass: 0; shape: sphere; sphereRadius: 0.25" position="0.474 2.781 -5.758" rotation="180 45 45" spawner="mixin: ramsclone" collision-filter="collisionForces: false" 6dof-only>
+         <a-gltf-model src="#rams-horn" position="0.170 -0.17 -0.232" shadow></a-gltf-model>
+         <a-sphere id="handle" position="0 0 0" color="tomato" opacity="0.5" radius="0.25"></a-sphere>
+       </a-entity>
+       <a-entity id="spawner2" dynamic-body="mass: 0; shape: sphere; sphereRadius: 0.25" position="0.327 2.612 -4.695" rotation="5.034 179.42 -135.69" spawner="mixin: ramsclone" collision-filter="collisionForces: false" 6dof-only>
+         <a-gltf-model src="#rams-horn" position="0.170 -0.17 -0.232" shadow></a-gltf-model>
+         <a-sphere id="handle" position="0 0 0" color="tomato" opacity="0.5" radius="0.25"></a-sphere>
        </a-entity>
 
        <a-entity id="menu camera" camera="active: false">

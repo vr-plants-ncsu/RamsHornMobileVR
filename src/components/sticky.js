@@ -149,6 +149,7 @@ AFRAME.registerComponent('sticky', {
     //console.log(this.constraints);
     //make new constraint var
     let constraint;
+    //hitEl.body.type = CANNON.Body.STATIC;
     constraint = new CANNON.LockConstraint(this.el.body, hitEl.body);
     //add constraint to array for tracking
     this.constraints[this.nextKey] = constraint;
@@ -187,6 +188,7 @@ AFRAME.registerComponent('sticky', {
       this.stuckEls[key] = null;
       this.stuckNum--;
       //stuckEl.setAttribute('sleepy', 'allowSleep: true; linearDamping: 0.1; angularDamping: 0.1');
+      //stuckEl.body.type = CANNON.Body.DYNAMIC;
       stuckEl.addState(this.UNSTUCK_STATE);
       stuckEl.removeState(this.STUCK_STATE);
       //this.el.object3D.remove(stuckEl.object3D);
