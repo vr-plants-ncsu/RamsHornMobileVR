@@ -27,8 +27,8 @@ AFRAME.registerComponent('6dof-only', {
 
     function handleEnterVR (event) {
       console.log(this);
-      this.el.object3D.visible = true;
       this.el.play();
+      this.el.object3D.visible = true;
     }
 
     function handleExitVR (event) {

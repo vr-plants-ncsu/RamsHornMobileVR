@@ -30,20 +30,22 @@ AFRAME.registerComponent('spawner', {
   },
 
   onHit: function(evt) {
-    var hitEl = evt.detail.body.el;
-    if(!hitEl.components.grab) {
+    var grabber = evt.detail.body.el;
+    if(!grabber.components.grab) {
+      console.log("Hit by non-grabber, : " + grabber + ".");
       return;
     }
-    if(!hitEl.components.grab.hitEl) {
+    if(!grabber.components.grab.hitEl) {
       console.log("Not holding anything!")
-      if(hitEl.components.grab.grabbing) {
+      if(grabber.components.grab.grabbing) {
+        //this.el.emit("Trying to grab spawner!");
         this.el.emit("spawn");
         console.log("Spawned!")
       }
       return
     }
-    if(hitEl.components.grab.grabbing) {
-      console.log("Holding something!")
+    if(grabber.components.grab.grabbing) {
+      console.log("Holding something: " + grabber.components.grab.hitEl + "!");
     }
 
     //console.log(hitEl.components.grab);
@@ -59,36 +61,47 @@ AFRAME.registerComponent('spawner', {
     //var entity = document.createElement('a-entity');
     //here we assume mixin is pooled:
 
-    var entity = el.sceneEl.components[poolName].requestentity();
+    var entity = el.sceneEl.components[poolName].requestEntity();
+    console.log(entity);
     entity.setAttribute('class', this.data.class);
     var matrixWorld = el.object3D.matrixWorld;
     var position = new THREE.Vector3();
     var worldRotation = new THREE.Quaternion();
     //var rotation = el.getAttribute('rotation');
     var rotation = new THREE.Quaternion();
-    rotation = this.object3D.quaternion;
+    rotation = el.object3D.quaternion;
     var entityRotation = new THREE.Quaternion();
 
     position.setFromMatrixPosition(matrixWorld);
-    matrixWorld.getWorldQuaternion(rotation);
+    //matrixWorld.getWorldQuaternion(rotation);
 
     //optimized below - actually should be further optimized!
     //entity.setAttribute('position', position);
     entity.object3D.position.copy(position);
     entity.object3D.quaternion.copy(rotation);
-
-    //entity.setAttribute('mixin', this.data.mixin);
-    entity.addEventListener('loaded', function() {
-      entityRotation = entity.getAttribute('rotation');
+    if(!entity.loaded){
+      entity.addEventListener('loaded', function() {
+        entity.object3D.position.copy(position);
+        entity.object3D.quaternion.copy(rotation);
+        el.sceneEl.appendChild(entity);
+      });
+    } else {
       entity.object3D.position.copy(position);
       entity.object3D.quaternion.copy(rotation);
-    });
+      el.sceneEl.appendChild(entity);
+    }
+    if(!entity.body) {
+      entity.addEventListener('body-loaded', () => {
+        entity.body.velocity = new CANNON.Vec3();
+        entity.body.angularVelocity = new CANNON.Vec3();
+        entity.play();
+      })
+    } else {
+      entity.body.velocity = new CANNON.Vec3();
+      entity.body.angularVelocity = new CANNON.Vec3();
+      entity.play();
+    }
 
-    entity.addEventListener('body-loaded', () => {
-      var body = entity.getAttribute('body');
-      body.velocity = new CANNON.Vec3();
-      body.angularVelocity = new CANNON.Vec3();
-    })
     //el.sceneEl.appendChild(entity);
   },
 });
