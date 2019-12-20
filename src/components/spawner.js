@@ -63,6 +63,7 @@ AFRAME.registerComponent('spawner', {
 
     var entity = el.sceneEl.components[poolName].requestEntity();
     console.log(entity);
+    el.sceneEl.appendChild(entity);
     entity.play();
     entity.setAttribute('class', this.data.class);
     var matrixWorld = el.object3D.matrixWorld;
@@ -78,8 +79,8 @@ AFRAME.registerComponent('spawner', {
 
     //optimized below - actually should be further optimized!
     //entity.setAttribute('position', position);
-    entity.object3D.position.copy(position);
-    entity.object3D.quaternion.copy(rotation);
+    //entity.object3D.position.copy(position);
+    //entity.object3D.quaternion.copy(rotation);
     if(!entity.loaded){
       entity.addEventListener('loaded', function() {
         entity.object3D.position.copy(position);
