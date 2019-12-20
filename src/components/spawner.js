@@ -63,6 +63,7 @@ AFRAME.registerComponent('spawner', {
 
     var entity = el.sceneEl.components[poolName].requestEntity();
     console.log(entity);
+    entity.play();
     entity.setAttribute('class', this.data.class);
     var matrixWorld = el.object3D.matrixWorld;
     var position = new THREE.Vector3();
@@ -83,24 +84,25 @@ AFRAME.registerComponent('spawner', {
       entity.addEventListener('loaded', function() {
         entity.object3D.position.copy(position);
         entity.object3D.quaternion.copy(rotation);
-        el.sceneEl.appendChild(entity);
+        //el.sceneEl.appendChild(entity);
       });
     } else {
       entity.object3D.position.copy(position);
       entity.object3D.quaternion.copy(rotation);
-      el.sceneEl.appendChild(entity);
+      //el.sceneEl.appendChild(entity);
     }
     if(!entity.body) {
       entity.addEventListener('body-loaded', () => {
         entity.body.velocity = new CANNON.Vec3();
         entity.body.angularVelocity = new CANNON.Vec3();
-        entity.play();
+        //entity.play();
       })
     } else {
       entity.body.velocity = new CANNON.Vec3();
       entity.body.angularVelocity = new CANNON.Vec3();
-      entity.play();
+      //entity.play();
     }
+    //el.sceneEl.appendChild(entity);
 
     //el.sceneEl.appendChild(entity);
   },
