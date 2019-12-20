@@ -27,6 +27,27 @@
      <script src="./src/components/6dof-only.js"></script>
      <script src="./src/components/floor-despawner.js"></script>
      <script src="./src/components/grab-mod.js"></script>
+
+     <script>
+      //Request access to motion and orientation controls
+      if (typeof DeviceMotionEvent.requestPermission === 'function') {
+        document.addEventListener("click", enableMotionControls);
+      }
+
+      function enableMotionControls(event) {
+        DeviceMotionEvent.requestPermission()
+        .then(response => {
+          if(response == 'granted')
+            alert("Motion Controls Access Granted!");
+        })
+        DeviceOrientationEvent.requestPermission()
+        .then(response => {
+          if(response =='granted')
+            alert("Orientation Controls Access Granted!");
+        })
+        document.removeEventListener("click", enableMotionControls);
+      }
+     </script>
      <!-- <script>
      window.DeviceMotionEvent.requestPermission().then(response => {
           if (response == 'granted') {
