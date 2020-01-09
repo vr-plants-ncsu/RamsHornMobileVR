@@ -10,7 +10,8 @@
      <meta name="theme-color" content="#ffffff">
      <link rel="stylesheet" type="text/css" href="./style.css">
      <!-- <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@9fadc40c180c43f198f893d4867209ca3c19bf93/dist/aframe-master.min.js"></script> -->
-     <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@ada1ed5f1e2736d70ba887cee6cfa9dbd655cc50/dist/aframe-master.min.js"></script>
+     <!-- <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@ada1ed5f1e2736d70ba887cee6cfa9dbd655cc50/dist/aframe-master.min.js"></script> -->
+     <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@e850be07c3a96fdfbafbd57c63cd2679fea0fcb1/dist/aframe-master.min.js"></script>
     <!-- <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.1.0/dist/aframe-extras.min.js"></script> -->
 
      <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.js"></script>
@@ -80,7 +81,7 @@
 
     </script>-->
 
-    <a-scene physics="debug: true"
+    <a-scene physics="debug: false"
              background="color: #ECECEC"
              fog="type: exponential; color: #b096fe; density: 0.002"
              renderer="colorManagement: true;
@@ -337,11 +338,11 @@
 
         </a-entity> -->
 
-       <a-entity id="spawner" dynamic-body="mass: 0; shape: sphere; sphereRadius: 0.25" position="0.474 2.781 -5.758" rotation="180 45 45" spawner="mixin: ramsclone" collision-filter="collisionForces: false">
+       <a-entity id="spawner" dynamic-body="mass: 0; shape: sphere; sphereRadius: 0.25" position="0.474 2.781 -5.758" rotation="180 45 45" spawner="mixin: ramsclone" collision-filter="collisionForces: false" 6dof-only>
          <a-gltf-model src="#rams-horn" position="0.170 -0.17 -0.232" shadow></a-gltf-model>
          <a-sphere id="handle" position="0 0 0" color="tomato" opacity="0.5" radius="0.25"></a-sphere>
        </a-entity>
-       <a-entity id="spawner2" dynamic-body="mass: 0; shape: sphere; sphereRadius: 0.25" position="0.327 2.612 -4.695" rotation="5.034 179.42 -135.69" spawner="mixin: ramsclone" collision-filter="collisionForces: false">
+       <a-entity id="spawner2" dynamic-body="mass: 0; shape: sphere; sphereRadius: 0.25" position="0.327 2.612 -4.695" rotation="5.034 179.42 -135.69" spawner="mixin: ramsclone" collision-filter="collisionForces: false" 6dof-only>
          <a-gltf-model src="#rams-horn" position="0.170 -0.17 -0.232" shadow></a-gltf-model>
          <a-sphere id="handle" position="0 0 0" color="tomato" opacity="0.5" radius="0.25"></a-sphere>
        </a-entity>
