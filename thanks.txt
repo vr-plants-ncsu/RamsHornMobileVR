@@ -1,6 +1,6 @@
 @Google for use of Poly and its remixable 3D models as well as the following users:
 
-The developers of the components used in this experience:
+The developers of the components used in or influencing this experience:
 
 Jack Wingo - ./src/components/spawner.js
              ./src/components/shooter.js
@@ -9,8 +9,25 @@ Jack Wingo - ./src/components/spawner.js
              ./src/components/6dof-only.js
              ./src/components/floor-despawner.js
 
+Don McCurdy - A-Frame Extras components: https://github.com/donmccurdy/aframe-extras
+                - many of these components were used to inform custom components
+              A-Frame Physics System: https://github.com/donmccurdy/aframe-physics-system
 
+A-Blast Team: Fernando Serrano, Diego F. Goberna, Kevin Ngo, Diego Marcos,
+              Christopher Robert Van Wiemeersch, Casey Yee
+              https://github.com/aframevr/a-blast
+                - this project served as a great example for making more interactive,
+                  game-based experiences with A-Frame
+Mayo Tobita - A-Frame Gif Shader: https://github.com/mayognaise/aframe-gif-shader
+                - this example was edited for some preexisting errors to make a material
+                  that can display Gifs for this experience
 
 The artists contributing the creative commons models used in this experience:
 
 "Signboard" by https://www.turbosquid.com/Search/Artists/ibrahmduman
+
+*** Still need to update these! Will push finished list of models later ***
+    Missing credits (mainly from Google Poly):
+      - Fences
+      - 360 photo backdrop
+      
