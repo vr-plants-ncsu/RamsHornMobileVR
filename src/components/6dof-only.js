@@ -9,8 +9,10 @@ AFRAME.registerComponent('6dof-only', {
     var handleSceneLoaded = handleSceneLoaded.bind(this);
     var handleEnterVR = handleEnterVR.bind(this);
     var handleExitVR = handleExitVR.bind(this);
-    sceneEl.addEventListener('enter-vr', handleEnterVR);
-    sceneEl.addEventListener('exit-vr', handleExitVR);
+    if(!sceneEl.isMobile) {
+      sceneEl.addEventListener('enter-vr', handleEnterVR);
+      sceneEl.addEventListener('exit-vr', handleExitVR);
+    }
 
     el.sceneEl.addEventListener('loaded', handleSceneLoaded);
 
