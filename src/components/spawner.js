@@ -31,9 +31,12 @@ AFRAME.registerComponent('spawner', {
 
   onHit: function(evt) {
     var grabber = evt.detail.body.el;
+    this.grabber = grabber;
     if(!grabber.components.grab) {
       console.log("Hit by non-grabber, : " + grabber + ".");
       return;
+    } else {
+      console.log(grabber.components);
     }
     if(!grabber.components.grab.hitEl) {
       console.log("Not holding anything!")
@@ -65,7 +68,7 @@ AFRAME.registerComponent('spawner', {
     console.log(entity);
     // el.sceneEl.appendChild(entity);
     // entity.play();
-    entity.setAttribute('class', this.data.class);
+    entity.classList.add(this.data.class);
     var matrixWorld = el.object3D.matrixWorld;
     var position = new THREE.Vector3();
     var worldRotation = new THREE.Quaternion();
@@ -123,7 +126,13 @@ AFRAME.registerComponent('spawner', {
     */
 
     var body = entity.getAttribute('body');
-    entity.removeState(this.data.class);
+    if(el.is('grabbed')) {
+      console.log("oops the spawner is registered as the grabbed components")
+    }
+    //entity.removeState('grabbed');
+    //var sphereCollider = this.grabber.getAttribute('sphere-collider');
+    //console.log("sphere collider: " + sphereCollider);
+    //this.grabber.setAttribute('sphere-collider', this.grabber.getAttribute('sphere-collider'));
     entity.play();
       //handle if body is being loaded or not
       //*** note: had to fix error where previously requested items weren't accepting new velocity
