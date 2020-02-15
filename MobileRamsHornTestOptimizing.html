@@ -11,8 +11,8 @@
      <link rel="stylesheet" type="text/css" href="./style.css">
      <!-- <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@9fadc40c180c43f198f893d4867209ca3c19bf93/dist/aframe-master.min.js"></script> -->
      <!-- <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@ada1ed5f1e2736d70ba887cee6cfa9dbd655cc50/dist/aframe-master.min.js"></script> -->
-     <!-- <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@e850be07c3a96fdfbafbd57c63cd2679fea0fcb1/dist/aframe-master.min.js"></script> -->
-       <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@e850be07c3a96fdfbafbd57c63cd2679fea0fcb1/dist/aframe-master.min.js"></script>
+       <!-- <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@2a88795181f7f718d32c6ea9fe47404b51a4462c/dist/aframe-master.min.js"></script> -->
     <!-- <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.1.0/dist/aframe-extras.min.js"></script> -->
 
      <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.js"></script>
@@ -310,8 +310,7 @@
       <!--<a-entity id="rig" movement-controls=" speed: .30; controls: keyboard" position="-0.463 2 -5.464" rotation="0 -90 0"> -->
       <a-entity id="rig" position="-0.463 2 -5.464" rotation="0 -90 0">
            <a-entity camera="active: true"
-                     look-controls=""
-                     data-aframe-inspector-original-camera=""
+                     look-controls
                      position = "0 1.6 0">
                      <!-- <a-entity cursor="fuse: false" visible="false"></a-entity> -->
                      <a-entity id="shooter"
@@ -350,9 +349,9 @@
          <a-sphere id="handle" position="0 0 0" color="tomato" opacity="0.5" radius="0.25"></a-sphere>
        </a-entity>
 
-       <a-entity id="menu camera" camera="active: false">
+       <!--<a-entity id="menu camera" camera="active: false">-->
 
-       </a-entity>
+      <!--/a-entity>-->
 
 
        <!-- <a-entity id="bison" gltf-model="#bison2-glb" mixin="colliderShapesBison" position="8 2 -8" rotation="0.0 60.849 0.0" scale="1 1 1" sticky="objects: .grabbable" shadow="receive: false" visible="false">
