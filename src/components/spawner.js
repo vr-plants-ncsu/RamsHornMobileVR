@@ -63,24 +63,41 @@ AFRAME.registerComponent('spawner', {
 
     var entity = el.sceneEl.components[poolName].requestEntity();
     console.log(entity);
-    el.sceneEl.appendChild(entity);
-    entity.play();
+    // el.sceneEl.appendChild(entity);
+    // entity.play();
     entity.setAttribute('class', this.data.class);
     var matrixWorld = el.object3D.matrixWorld;
     var position = new THREE.Vector3();
     var worldRotation = new THREE.Quaternion();
+    el.object3D.getWorldQuaternion(worldRotation);
     //var rotation = el.getAttribute('rotation');
-    var rotation = new THREE.Quaternion();
-    rotation = el.object3D.quaternion;
     var entityRotation = new THREE.Quaternion();
+    var rotation = new THREE.Quaternion();
+    //rotation = el.object3D.quaternion;
+    rotation.setFromEuler(  new THREE.Euler(
+                              THREE.Math.degToRad(135),
+                              THREE.Math.degToRad(225),
+                              THREE.Math.degToRad(30) //45 is perfect angle but I wanted it a little offset
+                            )
+                         );
 
+    entityRotation.copy(worldRotation);
+    entityRotation.multiply(rotation);
     position.setFromMatrixPosition(matrixWorld);
+    entity.object3D.position.copy(position);
+    entity.object3D.quaternion.set(
+      entityRotation.x,
+      entityRotation.y,
+      entityRotation.z,
+      entityRotation.w);
     //matrixWorld.getWorldQuaternion(rotation);
 
     //optimized below - actually should be further optimized!
     //entity.setAttribute('position', position);
     //entity.object3D.position.copy(position);
     //entity.object3D.quaternion.copy(rotation);
+
+    /*
     if(!entity.loaded){
       entity.addEventListener('loaded', function() {
         entity.object3D.position.copy(position);
@@ -103,6 +120,16 @@ AFRAME.registerComponent('spawner', {
       entity.body.angularVelocity = new CANNON.Vec3();
       //entity.play();
     }
+    */
+
+    var body = entity.getAttribute('body');
+    entity.removeState(this.data.class);
+    entity.play();
+      //handle if body is being loaded or not
+      //*** note: had to fix error where previously requested items weren't accepting new velocity
+
+
+
     //el.sceneEl.appendChild(entity);
 
     //el.sceneEl.appendChild(entity);

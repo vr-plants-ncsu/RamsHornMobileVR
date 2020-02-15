@@ -8,6 +8,10 @@
  * Updates its position to move along the controller.
  */
 AFRAME.registerComponent('grab-mod', {
+  schema: {
+    class: {default: 'grabbable'}
+  },
+
   init: function () {
     this.system = this.el.sceneEl.systems.physics;
 

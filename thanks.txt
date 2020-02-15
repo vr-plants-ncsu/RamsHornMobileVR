@@ -2,10 +2,15 @@
 
 The developers of the components used in this experience:
 
+Jack Wingo - ./src/components/spawner.js
+             ./src/components/shooter.js
+             ./src/components/sticky.js
+             ./src/components/back-and-forth.js
+             ./src/components/6dof-only.js
+             ./src/components/floor-despawner.js
 
 
 
 The artists contributing the creative commons models used in this experience:
 
 "Signboard" by https://www.turbosquid.com/Search/Artists/ibrahmduman
-
